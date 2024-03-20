@@ -50,6 +50,12 @@ SmallKCl_405nm_Full_Spline = CubicSpline(SmallKCl_405nm_cosd_flip, SmallKCl_405n
 #SmallKCl_405nm_Full_Spline = CubicSpline(SmallKCl_405nm_cosd, SmallKCl_405nm_Intensity_flip)
 #SmallKCl_405nm_Full_Final = SmallKCl_405nm_Full_Spline(SmallKCl_405nm_cosd_flip)
 
+# fig, ax = plt.subplots()
+# ax.plot(SmallKCl_405nm_cosd_flip, SmallKCl_405nm_cosd_flip)
+# ax.set_xlabel('Cos_Theta')
+# ax.set_ylabel('Single scattering intensity')
+# ax.set_title('PICASO Phase Fcns')
+
 #Large 532 nm
 LargeKCl_532nm_Full = pd.read_csv("./KCL_data/LargeKCl_532nm_Full.txt",header=0)
 LargeKCl_532nm_Full_Array = LargeKCl_532nm_Full.to_numpy() #convert to numpy array
@@ -409,7 +415,7 @@ def pent_diag_solve(l, A, B, C, D, E, F):
 
     return X
 
-@jit(nopython=True, cache=True)  ## comment out jit for this one to use lab data
+#@jit(nopython=True, cache=True)  ## comment out jit for this one to use lab data
 ## Added LargeKCl_405nm_Full_Spline to second line of variables for LAB scattering approx
 def get_reflected_3d(nlevel, wno,nwno, numg,numt, dtau_3d, tau_3d, w0_3d, cosb_3d,gcos2_3d, ftau_cld_3d,ftau_ray_3d,
     dtau_og_3d, tau_og_3d, w0_og_3d, cosb_og_3d,
@@ -710,25 +716,25 @@ def get_reflected_3d(nlevel, wno,nwno, numg,numt, dtau_3d, tau_3d, w0_3d, cosb_3
                 #print("p_single", p_single)
                 #p_single = np.nan_to_num(p_single, nan=0)
             # #Phase function as measured by ExCESS, extrapolated to full viewing angles
-            # elif single_phase==4:#'LAB_405nm_Small':
-            #     p_single = SmallKCl_405nm_Full_Spline(-cos_theta)
-            #     #p_single = SmallKCl_405nm_Full_Final(cos_theta)
-            # elif single_phase==5: # 'LAB_405nm_Medium':
-            #     p_single = MediumKCl_405nm_Full_Spline(-cos_theta)
-            #     #p_single = MediumKCl_405nm_Full_Final(cos_theta)
-            # elif single_phase==6: # 'LAB_405nm_Large':
-            #     p_single = LargeKCl_405nm_Full_Spline(-cos_theta)
-            #     #p_single = LargeKCl_405nm_Full_Final(cos_theta)
-            # elif single_phase==7: # 'LAB_532nm_Small':
-            #     #p_single = np.float64(float(SmallKCl_532nm_Full_Spline(cos_theta)))
-            #     p_single = SmallKCl_532nm_Full_Spline(-cos_theta)
-            #     #p_single = SmallKCl_532nm_Full_Final(cos_theta)
-            # elif single_phase==8: # 'LAB_532nm_Medium':
-            #     p_single = MediumKCl_532nm_Full_Spline(-cos_theta)
-            #     #p_single = MediumKCl_532nm_Full_Final(cos_theta)
-            # elif single_phase==9: # 'LAB_532nm_Large':
-            #     p_single = LargeKCl_532nm_Full_Spline(-cos_theta)    
-            #     #p_single = LargeKCl_532nm_Full_Final(cos_theta)                                                      
+            elif single_phase==4:#'LAB_405nm_Small':
+                p_single = SmallKCl_405nm_Full_Spline(-cos_theta)
+                #p_single = SmallKCl_405nm_Full_Final(cos_theta)
+            elif single_phase==5: # 'LAB_405nm_Medium':
+                p_single = MediumKCl_405nm_Full_Spline(-cos_theta)
+                #p_single = MediumKCl_405nm_Full_Final(cos_theta)
+            elif single_phase==6: # 'LAB_405nm_Large':
+                p_single = LargeKCl_405nm_Full_Spline(-cos_theta)
+                #p_single = LargeKCl_405nm_Full_Final(cos_theta)
+            elif single_phase==7: # 'LAB_532nm_Small':
+                #p_single = np.float64(float(SmallKCl_532nm_Full_Spline(cos_theta)))
+                p_single = SmallKCl_532nm_Full_Spline(-cos_theta)
+                #p_single = SmallKCl_532nm_Full_Final(cos_theta)
+            elif single_phase==8: # 'LAB_532nm_Medium':
+                p_single = MediumKCl_532nm_Full_Spline(-cos_theta)
+                #p_single = MediumKCl_532nm_Full_Final(cos_theta)
+            elif single_phase==9: # 'LAB_532nm_Large':
+                p_single = LargeKCl_532nm_Full_Spline(-cos_theta)    
+                #p_single = LargeKCl_532nm_Full_Final(cos_theta)                                                      
                                                                         
             ################################ END OPTIONS FOR DIRECT SCATTERING####################
 
@@ -767,11 +773,17 @@ def get_reflected_3d(nlevel, wno,nwno, numg,numt, dtau_3d, tau_3d, w0_3d, cosb_3
             #xint = np.nan_to_num(xint, nan=0)
             xint_at_top[ng,nt,:] = xint[0,:]  
 
-    #p_single_totals.append(p_single[1,:])
-    #p_single_array = np.array(p_single_totals)
-    #print("p_single_array", p_single_array)
+    # p_single_totals.append(p_single[1,:])
+    # p_single_array = np.array(p_single_totals)
+    # #print("p_single_array", p_single_array)
 
-    return xint_at_top# , p_single
+    # fig, ax = plt.subplots()
+    # ax.plot(cos_theta_array, p_single_array)
+    # ax.set_xlabel('Cos_Theta')
+    # ax.set_ylabel('Single scattering intensity')
+    # ax.set_title('PICASO Phase Fcns')
+
+    return xint_at_top, p_single
 
 #@jit(nopython=True, cache=True)  ##comment out jit to use lab data
 def get_reflected_1d(nlevel, wno,nwno, numg,numt, dtau, tau, w0, cosb,gcos2, ftau_cld, ftau_ray,

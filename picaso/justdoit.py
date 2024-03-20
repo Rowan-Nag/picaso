@@ -74,7 +74,6 @@ else:
 if not os.path.exists(os.environ.get('PYSYN_CDBS')): 
     raise Exception("You have not downloaded the Stellar reference data. Follow the installation instructions here: https://natashabatalha.github.io/picaso/installation.html#download-and-link-pysynphot-stellar-data. If you think you have already downloaded it then you likely just need to set your environment variable. You can use `os.environ['PYSYN_CDBS']=<yourpath>` directly in python if you run the line of code before you import PICASO.")
 
-
 p_single=[]
 #p_single_array=[]
 p_single_output=[]
@@ -135,7 +134,6 @@ def picaso(bundle,opacityclass, dimension = '1d',calculation='reflected', full_o
     #define delta eddington approximinations 
     delta_eddington = inputs['approx']['rt_params']['common']['delta_eddington']
 
-
     #USED in TOON (if being used)
     single_phase = inputs['approx']['rt_params']['toon']['single_phase']
     toon_coefficients = inputs['approx']['rt_params']['toon']['toon_coefficients']
@@ -152,11 +150,8 @@ def picaso(bundle,opacityclass, dimension = '1d',calculation='reflected', full_o
     psingle_rayleigh = inputs['approx']['rt_params']['SH']['psingle_rayleigh']
     calculate_fluxes = inputs['approx']['rt_params']['SH']['calculate_fluxes']
 
-
     # save returns to output file
     output_dir = inputs['output_dir']
-    
-
 
     #pressure assumption
     p_reference =  inputs['approx']['p_reference']
@@ -405,7 +400,7 @@ def picaso(bundle,opacityclass, dimension = '1d',calculation='reflected', full_o
             xint_at_top=0
             for ig in range(ngauss): # correlated - loop (which is different from gauss-tchevychev angle)
                 #use toon method (and tridiagonal matrix solver) to get net cumulative fluxes 
-                xint  = get_reflected_3d(nlevel, wno,nwno,ng,nt,
+                xint, p_single_output  = get_reflected_3d(nlevel, wno,nwno,ng,nt,
                                                 DTAU_3d[:,:,:,:,ig], TAU_3d[:,:,:,:,ig], W0_3d[:,:,:,:,ig], COSB_3d[:,:,:,:,ig],GCOS2_3d[:,:,:,:,ig],
                                                 FTAU_CLD_3d[:,:,:,:,ig],FTAU_RAY_3d[:,:,:,:,ig],
                                                 DTAU_OG_3d[:,:,:,:,ig], TAU_OG_3d[:,:,:,:,ig], W0_OG_3d[:,:,:,:,ig], COSB_OG_3d[:,:,:,:,ig],
@@ -425,28 +420,33 @@ def picaso(bundle,opacityclass, dimension = '1d',calculation='reflected', full_o
                 #                                 single_phase,multi_phase,
                 #                                 frac_a,frac_b,frac_c,constant_back,constant_forward, tridiagonal, p_single)[1]   # [1] grabs p_single values
                 
-                # This if/else statement uses p_single_output above (which needs p_single as second return value for get_reflected_3d) and outputs p_single values
+                #This if/else statement uses p_single_output above (which needs p_single as second return value for get_reflected_3d) and outputs p_single values (just for testing purposes, this may be deleted later)
                 # if single_phase < 4:
                 #     np.array(p_single.append(p_single_output[1,1]))
                 #     p_single_array = p_single
-                #     print("p_single_array", p_single_array)
+                #     #print("p_single_array", p_single_array)
 
                 #     np.array(cos_theta_array.append(cos_theta))
-                #     print("cos theta",cos_theta_array)
+                #     #print("cos theta",cos_theta_array)
 
                 # else:
                 #     np.array(p_single.append(p_single_output))
                 #     p_single_array = np.concatenate([np.atleast_1d(arr) for arr in p_single])
-                #     print("p_single_array", p_single_array)
+                #     #print("p_single_array", p_single_array)
 
                 #     np.array(cos_theta_array.append(cos_theta))
-                #     print("cos theta",cos_theta_array)
+                #     #print("cos theta",cos_theta_array)
 
                 #if full output is requested add in xint at top for 3d plots
             if full_output: 
                 atm.xint_at_top = xint_at_top
 
-        # #fig, ax = plt.subplots()
+        # print("cos theta",cos_theta_array)
+        # print("p_single_array", p_single_array)
+        print("cos theta",cos_theta)  # cos_theta comes from geom, not get_reflected_3d
+        print("p_single output", p_single_output)  # comes from get_reflected_3d
+
+        # fig, ax = plt.subplots()
 
         # ax.plot(cos_theta_array, p_single_array)
 
@@ -478,7 +478,6 @@ def picaso(bundle,opacityclass, dimension = '1d',calculation='reflected', full_o
     #returns['flux'] = flux
     if 'transmission' in calculation: 
         returns['transit_depth'] = rprs2
-
 
     #for reflected light use compress_disco routine
     #this takes the intensity as a functin of tangle/gangle and creates a 1d spectrum
@@ -513,7 +512,6 @@ def picaso(bundle,opacityclass, dimension = '1d',calculation='reflected', full_o
         if full_output: 
             atm.thermal_flux_planet = thermal
             
-
         #only need to return relative flux if not a browndwarf calculation
         if radius_star == 'nostar': 
             returns['fpfs_thermal'] = ['No star mode for Brown Dwarfs was used']
