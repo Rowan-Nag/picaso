@@ -10,6 +10,7 @@ from scipy.linalg import solve_banded
 import matplotlib.pyplot as plt
 import pandas as pd
 from scipy.interpolate import CubicSpline
+import math
 
 ## Define Laboratory data to be used in get_reflected_3d (single scattering approximations; ~Line 690) below
 ## Make sure to change directories as needed
@@ -26,6 +27,16 @@ LargeKCl_405nm_Full_Spline = CubicSpline(LargeKCl_405nm_cosd_flip, LargeKCl_405n
 #LargeKCl_405nm_Full_Spline = CubicSpline(LargeKCl_405nm_cosd, LargeKCl_405nm_Intensity_flip)
 #LargeKCl_405nm_Full_Final = LargeKCl_405nm_Full_Spline(LargeKCl_405nm_cosd_flip)
 
+# fig, ax = plt.subplots()
+# ax.plot(LargeKCl_405nm_cosd_flip, LargeKCl_405nm_Intensity_flip)
+# ax.set_xlabel('Cos(Theta)')
+# ax.set_ylabel('p_single (intensity)')
+# ax.set_title('PICASO Phase Fcns: 405nm Large')
+# ax.set_yscale('log')
+# ax.set_xlim([-1, 1])
+# ax.set_ylim([0.0001, 10])
+# plt.show()
+
 #Medium 405 nm
 MediumKCl_405nm_Full = pd.read_csv("./KCL_data/MediumKCl_405nm_Full.txt",header=0)
 MediumKCl_405nm_Full_Array = MediumKCl_405nm_Full.to_numpy() #convert to numpy array
@@ -37,6 +48,16 @@ MediumKCl_405nm_Intensity_flip = np.flip(MediumKCl_405nm_Intensity)
 MediumKCl_405nm_Full_Spline = CubicSpline(MediumKCl_405nm_cosd_flip, MediumKCl_405nm_Intensity_flip)
 #MediumKCl_405nm_Full_Spline = CubicSpline(MediumKCl_405nm_cosd, MediumKCl_405nm_Intensity_flip)
 #MediumKCl_405nm_Full_Final = MediumKCl_405nm_Full_Spline(MediumKCl_405nm_cosd_flip)
+
+# fig, ax = plt.subplots()
+# ax.plot(MediumKCl_405nm_cosd_flip, MediumKCl_405nm_Intensity_flip)
+# ax.set_xlabel('Cos(Theta)')
+# ax.set_ylabel('p_single (intensity)')
+# ax.set_title('PICASO Phase Fcns: 405nm Medium')
+# ax.set_yscale('log')
+# ax.set_xlim([-1, 1])
+# ax.set_ylim([0.0001, 10])
+# plt.show()
 
 #Small 405 nm
 SmallKCl_405nm_Full = pd.read_csv("./KCL_data/SmallKCl_405nm_Full.txt",header=0)
@@ -50,11 +71,29 @@ SmallKCl_405nm_Full_Spline = CubicSpline(SmallKCl_405nm_cosd_flip, SmallKCl_405n
 #SmallKCl_405nm_Full_Spline = CubicSpline(SmallKCl_405nm_cosd, SmallKCl_405nm_Intensity_flip)
 #SmallKCl_405nm_Full_Final = SmallKCl_405nm_Full_Spline(SmallKCl_405nm_cosd_flip)
 
-# fig, ax = plt.subplots()
-# ax.plot(SmallKCl_405nm_cosd_flip, SmallKCl_405nm_cosd_flip)
-# ax.set_xlabel('Cos_Theta')
-# ax.set_ylabel('Single scattering intensity')
-# ax.set_title('PICASO Phase Fcns')
+fig, ax = plt.subplots()
+ax.plot(SmallKCl_405nm_cosd_flip, SmallKCl_405nm_Intensity_flip)
+ax.plot(LargeKCl_405nm_cosd_flip, LargeKCl_405nm_Intensity_flip)
+ax.plot(MediumKCl_405nm_cosd_flip, MediumKCl_405nm_Intensity_flip)
+ax.set_xlabel('Cos(Theta)')
+ax.set_ylabel('p_single (intensity)')
+ax.set_title('PICASO Phase Fcns: 405nm)
+ax.set_yscale('log')
+ax.set_xlim([-1, 1])
+ax.set_ylim([0.0001, 10])
+plt.show()
+
+fig, ax = plt.subplots()
+ax.plot(np.arccos(SmallKCl_405nm_cosd_flip), SmallKCl_405nm_Intensity_flip)
+ax.plot(np.arccos(LargeKCl_405nm_cosd_flip), LargeKCl_405nm_Intensity_flip)
+ax.plot(np.arccos(MediumKCl_405nm_cosd_flip), MediumKCl_405nm_Intensity_flip)
+ax.set_xlabel('Cos(Theta)')
+ax.set_ylabel('p_single (intensity)')
+ax.set_title('PICASO Phase Fcns: 405nm')
+ax.set_yscale('log')
+#ax.set_xlim([0, 180])
+ax.set_ylim([0.0001, 10])
+plt.show()
 
 #Large 532 nm
 LargeKCl_532nm_Full = pd.read_csv("./KCL_data/LargeKCl_532nm_Full.txt",header=0)
