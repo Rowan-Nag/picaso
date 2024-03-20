@@ -2895,7 +2895,7 @@ class inputs():
         for i,iphase in enumerate(phases): 
             new_lat = self.inputs['disco'][iphase]['latitude']*180/np.pi#to degrees
             new_lon_og = self.inputs['disco'][iphase]['longitude']*180/np.pi#to degrees
-            print("You are in PICASO Master Branch")
+            print("You are in PICASO LAB Branch")
             print("new_lon OG", new_lon_og)
             #Reflected case needs a step to ensure that the reflected crescent is at the correct point wrt the substellar point
             #This statement only works for 10x10 cases! I am working on expanding this to all grids soon if possible
