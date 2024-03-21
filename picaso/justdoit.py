@@ -74,10 +74,11 @@ else:
 if not os.path.exists(os.environ.get('PYSYN_CDBS')): 
     raise Exception("You have not downloaded the Stellar reference data. Follow the installation instructions here: https://natashabatalha.github.io/picaso/installation.html#download-and-link-pysynphot-stellar-data. If you think you have already downloaded it then you likely just need to set your environment variable. You can use `os.environ['PYSYN_CDBS']=<yourpath>` directly in python if you run the line of code before you import PICASO.")
 
-p_single=[]
-#p_single_array=[]
-p_single_output=[]
-cos_theta_array=[]
+#p_single=[]
+p_single_array=[]
+#p_single_output= np.array([])
+#p_single_array = np.array([])
+#cos_theta_array=[]
 def picaso(bundle,opacityclass, dimension = '1d',calculation='reflected', full_output=False, 
     plot_opacity= False, as_dict=True):
     """
@@ -398,6 +399,7 @@ def picaso(bundle,opacityclass, dimension = '1d',calculation='reflected', full_o
         if  'reflected' in calculation:
             #p_single=[]
             xint_at_top=0
+            #p_single_array = picaso(returns, p_single_array)
             for ig in range(ngauss): # correlated - loop (which is different from gauss-tchevychev angle)
                 #use toon method (and tridiagonal matrix solver) to get net cumulative fluxes 
                 xint, p_single_output  = get_reflected_3d(nlevel, wno,nwno,ng,nt,
@@ -443,8 +445,13 @@ def picaso(bundle,opacityclass, dimension = '1d',calculation='reflected', full_o
 
         # print("cos theta",cos_theta_array)
         # print("p_single_array", p_single_array)
-        print("cos theta",cos_theta)  # cos_theta comes from geom, not get_reflected_3d
-        print("p_single output", p_single_output)  # comes from get_reflected_3d
+            print("cos theta",cos_theta)  # cos_theta comes from geom, not get_reflected_3d
+            print("p_single output", p_single_output) # comes from get_reflected_3d
+
+            #p_single_array.append(p_single_output)
+            p_single_array.append(p_single_output)
+            #p_single_array = np.concatenate((p_single_array, [p_single_output]))
+            #print("p_single Array", p_single_array)
 
         # fig, ax = plt.subplots()
 
@@ -551,7 +558,7 @@ def picaso(bundle,opacityclass, dimension = '1d',calculation='reflected', full_o
             #'xint_at_top': xint_at_top, 'albedo': albedo, 'flux': flux_out, 'xint': intensity,
             'b_top': b_top, 'gweight': gweight, 'tweight': tweight, 'gangle': gangle, 'tangle': tangle}, 
             open(filename,'wb'), protocol=2)
-    return returns
+    return returns#, p_single_array
 
 def _finditem(obj, key):
     if key in obj: return obj[key]
