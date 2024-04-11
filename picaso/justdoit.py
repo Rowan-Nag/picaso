@@ -2901,7 +2901,7 @@ class inputs():
             new_lat = self.inputs['disco'][iphase]['latitude']*180/np.pi#to degrees
             new_lon_og = self.inputs['disco'][iphase]['longitude']*180/np.pi#to degrees
             print("You are in PICASO LAB Branch")
-            print("new_lon OG", new_lon_og)
+            #print("new_lon OG", new_lon_og)
             #Reflected case needs a step to ensure that the reflected crescent is at the correct point wrt the substellar point
             #This statement only works for 10x10 cases! I am working on expanding this to all grids soon if possible
             micro_shift = (abs(abs(new_lon_og[-1]) - abs(new_lon_og[-2])) - abs(abs(new_lon_og[0]) - abs(new_lon_og[1]))) / 2   #accounts for the difference in sizes between latxlon bins at phases!=0.
@@ -2963,6 +2963,7 @@ class inputs():
             #append new lons and lats, used to create array below this for loop
             new_lat_totals.append(new_lat)
             new_lon_totals.append(new_lon)
+            print("new_lon Atm_4d", new_lon_totals)
             new_lon_totals_og.append(new_lon_og)
             self.inputs['disco'][iphase]['longitude'] = new_lon * np.pi/180   # changing lon around requires us to re-define self.inputs as well (needed for disco geom and also for clouds_4d)
             #print("new lon totals", new_lon_totals)
@@ -3122,7 +3123,7 @@ class inputs():
                 # note this if/else step not needed in clouds_4d. The changes to lon here are remembered by self.inputs['disco'][iphase]['longitude'] (redefined below this if/else statement)
                 #micro_shift = (abs(abs(new_lon_og[-1]) - abs(new_lon_og[-2])) - abs(abs(new_lon_og[0]) - abs(new_lon_og[1]))) / 2   #accounts for the difference in sizes between latxlon bins at phases!=0.
                 new_lat = np.array(self.inputs['atmosphere']['profile']['lat2d_clouds'][i,:])#*180/np.pi
-                new_lon_og = np.array(self.inputs['atmosphere']['profile']['lon2d_clouds'][i,:])#*180/np.pi
+                new_lon_og = np.array(self.inputs['atmosphere']['profile']['lon2d_clouds'][i,:]) - shift[i] #*180/np.pi
                 #print("new_lon_og clouds", new_lon_og)
                 micro_shift = (abs(abs(new_lon_og[-1]) - abs(new_lon_og[-2])) - abs(abs(new_lon_og[0]) - abs(new_lon_og[1]))) / 2   #accounts for the difference in sizes between latxlon bins at phases!=0.
                 ng = self.inputs['disco'][iphase]['num_gangle'] # phase curve shift dependent on ngangles. Ng is used below to determine correct shift paramters
@@ -3166,12 +3167,12 @@ class inputs():
                     elif new_lon_og[-1] < -77 and new_lon_og[0] < 0: # third quarter of phases
                         new_lon_transfer = new_lon_og[-1] + new_lon_og[0]
                         new_lon = new_lon_og - new_lon_transfer + micro_shift #new_lon_transfer here is negative, so we are adding
-                        shift_back = -new_lon_transfer + micro_shift - 180
+                        shift_back = -new_lon_transfer + micro_shift #- 180
                     elif new_lon_og[-1] < -77 and new_lon_og[0] > 0: #last quarter of phases 
                         new_lon_transfer = abs(new_lon_og[-1]) - abs(new_lon_og[0]) # take the difference between the first lon and the last lon at each phase
                         new_lon = new_lon_og + new_lon_transfer + micro_shift # The 'transfer' will then shift each phase to the opposite side of the dayside hemisphere. This is crucial for weighting ng and nt correctly for spectrum.
                         #add total shift statement
-                        shift_back = new_lon_transfer + micro_shift - 180
+                        shift_back = new_lon_transfer + micro_shift #- 180
 
                 if 'new_lon' in locals():
                     # variable exists
@@ -3181,12 +3182,15 @@ class inputs():
 
                 new_lat_totals.append(new_lat)
                 new_lon_totals.append(new_lon)
+                print("new_lon Clouds_4d", new_lon_totals)
+                #new_lon_totals = new_lon_totals[i] - 180
                 #total_shift = (iphase*180/np.pi + (shift[i] - shift_back)) % 360
                 # total_shift = (iphase*180/np.pi + (shift[i] + shift_back)) % 360
                 total_shift = (iphase*180/np.pi + shift[i]) % 360 
                 change_zero_pt = og_lon +  total_shift + shift_back
                 change_zero_pt[change_zero_pt>360]=change_zero_pt[change_zero_pt>360]%360 #such that always between -180 and 180
                 change_zero_pt[change_zero_pt>180]=change_zero_pt[change_zero_pt>180]%180-180 #such that always between -180 and 180
+                #change_zero_pt = 0
                 #ds.coords['lon'].values = change_zero_pt
                 split = np.argmin(abs(change_zero_pt + 180)) #find point where we should shift the grid
                 for idata in data_vars_og.keys():
