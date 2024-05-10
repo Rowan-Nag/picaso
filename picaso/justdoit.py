@@ -3123,7 +3123,7 @@ class inputs():
                 # note this if/else step not needed in clouds_4d. The changes to lon here are remembered by self.inputs['disco'][iphase]['longitude'] (redefined below this if/else statement)
                 #micro_shift = (abs(abs(new_lon_og[-1]) - abs(new_lon_og[-2])) - abs(abs(new_lon_og[0]) - abs(new_lon_og[1]))) / 2   #accounts for the difference in sizes between latxlon bins at phases!=0.
                 new_lat = np.array(self.inputs['atmosphere']['profile']['lat2d_clouds'][i,:])#*180/np.pi
-                new_lon_og = np.array(self.inputs['atmosphere']['profile']['lon2d_clouds'][i,:]) - shift[i] #*180/np.pi
+                new_lon_og = np.array(self.inputs['atmosphere']['profile']['lon2d_clouds'][i,:]) #- shift[i] #*180/np.pi
                 #print("new_lon_og clouds", new_lon_og)
                 micro_shift = (abs(abs(new_lon_og[-1]) - abs(new_lon_og[-2])) - abs(abs(new_lon_og[0]) - abs(new_lon_og[1]))) / 2   #accounts for the difference in sizes between latxlon bins at phases!=0.
                 ng = self.inputs['disco'][iphase]['num_gangle'] # phase curve shift dependent on ngangles. Ng is used below to determine correct shift paramters
