@@ -109,6 +109,8 @@ def picaso(bundle,opacityclass, dimension = '1d',calculation='reflected', full_o
     inputs = bundle.inputs
 
     wno = opacityclass.wno
+    print("wno", wno)
+
     nwno = opacityclass.nwno
     ngauss = opacityclass.ngauss
     gauss_wts = opacityclass.gauss_wts #for opacity
@@ -445,13 +447,14 @@ def picaso(bundle,opacityclass, dimension = '1d',calculation='reflected', full_o
 
         # print("cos theta",cos_theta_array)
         # print("p_single_array", p_single_array)
-            print("cos theta",cos_theta)  # cos_theta comes from geom, not get_reflected_3d
-            print("p_single output", p_single_output) # comes from get_reflected_3d
+            # print("cos theta",cos_theta)  # cos_theta comes from geom, not get_reflected_3d
+            # print("p_single output", p_single_output[21,:]) # comes from get_reflected_3d
+            # #print("p_single output Shape", p_single_output[21,170].shape)
 
-            #p_single_array.append(p_single_output)
-            p_single_array.append(p_single_output)
-            #p_single_array = np.concatenate((p_single_array, [p_single_output]))
-            #print("p_single Array", p_single_array)
+            # #p_single_array.append(p_single_output)
+            # p_single_array.append(p_single_output[21,170])
+            # #p_single_array = np.concatenate((p_single_array, [p_single_output]))
+            # print("p_single Array", p_single_array)
 
         # fig, ax = plt.subplots()
 

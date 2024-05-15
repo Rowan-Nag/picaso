@@ -22,10 +22,13 @@ LargeKCl_405nm_cosd = LargeKCl_405nm_Full_Array[:,3] #extract 4th column (cos(th
 LargeKCl_405nm_Intensity = LargeKCl_405nm_Full_Array[:,2] #extract 3rd column (normalized intensity)
 LargeKCl_405nm_cosd_flip = np.flip(LargeKCl_405nm_cosd)  # Reverse these bc CubicSpline needs x in order of increasing
 LargeKCl_405nm_Intensity_flip = np.flip(LargeKCl_405nm_Intensity)
+LargeKCl_405nm_Integral = np.trapz(LargeKCl_405nm_Intensity_flip, LargeKCl_405nm_cosd_flip)
+LargeKCl_405nm_Normalized2 = 2 * LargeKCl_405nm_Intensity_flip / LargeKCl_405nm_Integral
+LargeKCl_405nm_Full_Spline = CubicSpline(LargeKCl_405nm_cosd_flip, LargeKCl_405nm_Normalized2)
 # This spline is what we will be using hence forth. It describes (extrapolated; 0-180 deg) lab data using a series of piecewise polynomials in order to create a continuous set of functions wrt cos_theta
-LargeKCl_405nm_Full_Spline = CubicSpline(LargeKCl_405nm_cosd_flip, LargeKCl_405nm_Intensity_flip)
-#LargeKCl_405nm_Full_Spline = CubicSpline(LargeKCl_405nm_cosd, LargeKCl_405nm_Intensity_flip)
-#LargeKCl_405nm_Full_Final = LargeKCl_405nm_Full_Spline(LargeKCl_405nm_cosd_flip)
+#LargeKCl_405nm_Full_Spline = CubicSpline(LargeKCl_405nm_cosd_flip, LargeKCl_405nm_Intensity_flip)
+#LargeKCl_405nm_Full_Spline = CubicSpline(LargeKCl_405nm_cosd, LargeKCl_405nm_Intensity_flip) # not these
+#LargeKCl_405nm_Full_Final = LargeKCl_405nm_Full_Spline(LargeKCl_405nm_cosd_flip) # not this
 
 #Medium 405 nm
 MediumKCl_405nm_Full = pd.read_csv("./KCL_data/MediumKCl_405nm_Full.txt",header=0)
@@ -34,8 +37,11 @@ MediumKCl_405nm_cosd = MediumKCl_405nm_Full_Array[:,3] #extract 4th column (cos(
 MediumKCl_405nm_Intensity = MediumKCl_405nm_Full_Array[:,2] #extract 3rd column (normalized intensity)
 MediumKCl_405nm_cosd_flip = np.flip(MediumKCl_405nm_cosd)  # Reverse these bc CubicSpline needs x in order of increasing
 MediumKCl_405nm_Intensity_flip = np.flip(MediumKCl_405nm_Intensity)
+MediumKCl_405nm_Integral = np.trapz(MediumKCl_405nm_Intensity_flip, MediumKCl_405nm_cosd_flip)
+MediumKCl_405nm_Normalized2 = 2 * MediumKCl_405nm_Intensity_flip / MediumKCl_405nm_Integral
+MediumKCl_405nm_Full_Spline = CubicSpline(MediumKCl_405nm_cosd_flip, MediumKCl_405nm_Normalized2)
 # This spline is what we will be using hence forth. It describes (extrapolated; 0-180 deg) lab data using a series of piecewise polynomials in order to create a continuous set of functions wrt cos_theta
-MediumKCl_405nm_Full_Spline = CubicSpline(MediumKCl_405nm_cosd_flip, MediumKCl_405nm_Intensity_flip)
+#MediumKCl_405nm_Full_Spline = CubicSpline(MediumKCl_405nm_cosd_flip, MediumKCl_405nm_Intensity_flip)
 #MediumKCl_405nm_Full_Spline = CubicSpline(MediumKCl_405nm_cosd, MediumKCl_405nm_Intensity_flip)
 #MediumKCl_405nm_Full_Final = MediumKCl_405nm_Full_Spline(MediumKCl_405nm_cosd_flip)
 
@@ -46,8 +52,11 @@ SmallKCl_405nm_cosd = SmallKCl_405nm_Full_Array[:,3] #extract 4th column (cos(th
 SmallKCl_405nm_Intensity = SmallKCl_405nm_Full_Array[:,2] #extract 3rd column (normalized intensity)
 SmallKCl_405nm_cosd_flip = np.flip(SmallKCl_405nm_cosd)  # Reverse these bc CubicSpline needs x in order of increasing
 SmallKCl_405nm_Intensity_flip = np.flip(SmallKCl_405nm_Intensity)
+SmallKCl_405nm_Integral = np.trapz(SmallKCl_405nm_Intensity_flip, SmallKCl_405nm_cosd_flip)
+SmallKCl_405nm_Normalized2 = 2 * SmallKCl_405nm_Intensity_flip / SmallKCl_405nm_Integral
+SmallKCl_405nm_Full_Spline = CubicSpline(SmallKCl_405nm_cosd_flip, SmallKCl_405nm_Normalized2)
 # This spline is what we will be using hence forth. It describes (extrapolated; 0-180 deg) lab data using a series of piecewise polynomials in order to create a continuous set of functions wrt cos_theta
-SmallKCl_405nm_Full_Spline = CubicSpline(SmallKCl_405nm_cosd_flip, SmallKCl_405nm_Intensity_flip)
+#SmallKCl_405nm_Full_Spline = CubicSpline(SmallKCl_405nm_cosd_flip, SmallKCl_405nm_Intensity_flip)
 #SmallKCl_405nm_Full_Spline = CubicSpline(SmallKCl_405nm_cosd, SmallKCl_405nm_Intensity_flip)
 #SmallKCl_405nm_Full_Final = SmallKCl_405nm_Full_Spline(SmallKCl_405nm_cosd_flip)
 
@@ -64,15 +73,15 @@ SmallKCl_405nm_Full_Spline = CubicSpline(SmallKCl_405nm_cosd_flip, SmallKCl_405n
 # plt.show()
 
 fig, ax = plt.subplots()
-ax.plot(np.arccos(SmallKCl_405nm_cosd_flip), SmallKCl_405nm_Intensity_flip)
-ax.plot(np.arccos(LargeKCl_405nm_cosd_flip), LargeKCl_405nm_Intensity_flip)
-ax.plot(np.arccos(MediumKCl_405nm_cosd_flip), MediumKCl_405nm_Intensity_flip)
+ax.plot(np.arccos(SmallKCl_405nm_cosd_flip), SmallKCl_405nm_Normalized2)
+ax.plot(np.arccos(LargeKCl_405nm_cosd_flip), LargeKCl_405nm_Normalized2)
+ax.plot(np.arccos(MediumKCl_405nm_cosd_flip), MediumKCl_405nm_Normalized2)
 ax.set_xlabel('Theta (rad)')
 ax.set_ylabel('p_single (intensity)')
 ax.set_title('PICASO Phase Fcns: 405nm')
 ax.set_yscale('log')
 #ax.set_xlim([0, 180])
-ax.set_ylim([0.0001, 10])
+ax.set_ylim([3e-2, 500])
 plt.show()
 
 #Large 532 nm
@@ -82,8 +91,11 @@ LargeKCl_532nm_cosd = LargeKCl_532nm_Full_Array[:,3] #extract 4th column (cos(th
 LargeKCl_532nm_Intensity = LargeKCl_532nm_Full_Array[:,2] #extract 3rd column (normalized intensity)
 LargeKCl_532nm_cosd_flip = np.flip(LargeKCl_532nm_cosd)  # Reverse these bc CubicSpline needs x in order of increasing
 LargeKCl_532nm_Intensity_flip = np.flip(LargeKCl_532nm_Intensity)
+LargeKCl_532nm_Integral = np.trapz(LargeKCl_532nm_Intensity_flip, LargeKCl_532nm_cosd_flip)
+LargeKCl_532nm_Normalized2 = 2 * LargeKCl_532nm_Intensity_flip / LargeKCl_532nm_Integral
+LargeKCl_532nm_Full_Spline = CubicSpline(LargeKCl_532nm_cosd_flip, LargeKCl_532nm_Normalized2)
 # This spline is what we will be using hence forth. It describes (extrapolated; 0-180 deg) lab data using a series of piecewise polynomials in order to create a continuous set of functions wrt cos_theta
-LargeKCl_532nm_Full_Spline = CubicSpline(LargeKCl_532nm_cosd_flip, LargeKCl_532nm_Intensity_flip)
+#LargeKCl_532nm_Full_Spline = CubicSpline(LargeKCl_532nm_cosd_flip, LargeKCl_532nm_Intensity_flip)
 #LargeKCl_532nm_Full_Spline = CubicSpline(LargeKCl_532nm_cosd, LargeKCl_532nm_Intensity_flip)
 #LargeKCl_532nm_Full_Final = LargeKCl_532nm_Full_Spline(LargeKCl_532nm_cosd_flip)
 
@@ -94,8 +106,11 @@ MediumKCl_532nm_cosd = MediumKCl_532nm_Full_Array[:,3] #extract 4th column (cos(
 MediumKCl_532nm_Intensity = MediumKCl_532nm_Full_Array[:,2] #extract 3rd column (normalized intensity)
 MediumKCl_532nm_cosd_flip = np.flip(MediumKCl_532nm_cosd)  # Reverse these bc CubicSpline needs x in order of increasing
 MediumKCl_532nm_Intensity_flip = np.flip(MediumKCl_532nm_Intensity)
+MediumKCl_532nm_Integral = np.trapz(MediumKCl_532nm_Intensity_flip, MediumKCl_532nm_cosd_flip)
+MediumKCl_532nm_Normalized2 = 2 * MediumKCl_532nm_Intensity_flip / MediumKCl_532nm_Integral
+MediumKCl_532nm_Full_Spline = CubicSpline(MediumKCl_532nm_cosd_flip, MediumKCl_532nm_Normalized2)
 # This spline is what we will be using hence forth. It describes (extrapolated; 0-180 deg) lab data using a series of piecewise polynomials in order to create a continuous set of functions wrt cos_theta
-MediumKCl_532nm_Full_Spline = CubicSpline(MediumKCl_532nm_cosd_flip, MediumKCl_532nm_Intensity_flip)
+#MediumKCl_532nm_Full_Spline = CubicSpline(MediumKCl_532nm_cosd_flip, MediumKCl_532nm_Intensity_flip)
 #MediumKCl_532nm_Full_Spline = CubicSpline(MediumKCl_532nm_cosd, MediumKCl_532nm_Intensity_flip)
 #MediumKCl_532nm_Full_Final = MediumKCl_532nm_Full_Spline(MediumKCl_532nm_cosd_flip)
 
@@ -106,8 +121,11 @@ SmallKCl_532nm_cosd = SmallKCl_532nm_Full_Array[:,3] #extract 4th column (cos(th
 SmallKCl_532nm_Intensity = SmallKCl_532nm_Full_Array[:,2] #extract 3rd column (normalized intensity)
 SmallKCl_532nm_cosd_flip = np.flip(SmallKCl_532nm_cosd)  # Reverse these bc CubicSpline needs x in order of increasing
 SmallKCl_532nm_Intensity_flip = np.flip(SmallKCl_532nm_Intensity)
+SmallKCl_532nm_Integral = np.trapz(SmallKCl_532nm_Intensity_flip, SmallKCl_532nm_cosd_flip)
+SmallKCl_532nm_Normalized2 = 2 * SmallKCl_532nm_Intensity_flip / SmallKCl_532nm_Integral
+SmallKCl_532nm_Full_Spline = CubicSpline(SmallKCl_532nm_cosd_flip, SmallKCl_532nm_Normalized2)
 # This spline is what we will be using hence forth. It describes (extrapolated; 0-180 deg) lab data using a series of piecewise polynomials in order to create a continuous set of functions wrt cos_theta
-SmallKCl_532nm_Full_Spline = CubicSpline(SmallKCl_532nm_cosd_flip, SmallKCl_532nm_Intensity_flip)
+#SmallKCl_532nm_Full_Spline = CubicSpline(SmallKCl_532nm_cosd_flip, SmallKCl_532nm_Intensity_flip)
 #SmallKCl_532nm_Full_Spline = CubicSpline(SmallKCl_532nm_cosd, SmallKCl_532nm_Intensity_flip)
 #SmallKCl_532nm_Full_Final = SmallKCl_532nm_Full_Spline(SmallKCl_532nm_cosd_flip)
 
@@ -120,8 +138,11 @@ Mie_SmallKCl_405nm_cosd = Mie_SmallKCl_405nm_Array[:,2] #extract 3rd column (cos
 Mie_SmallKCl_405nm_Intensity = Mie_SmallKCl_405nm_Array[:,1] #extract 2nd column (normalized intensity)
 Mie_SmallKCl_405nm_cosd_flip = np.flip(Mie_SmallKCl_405nm_cosd)  # Reverse these bc CubicSpline needs x in order of increasing
 Mie_SmallKCl_405nm_Intensity_flip = np.flip(Mie_SmallKCl_405nm_Intensity)
+Mie_SmallKCl_405nm_Integral = np.trapz(Mie_SmallKCl_405nm_Intensity_flip, Mie_SmallKCl_405nm_cosd_flip)
+Mie_SmallKCl_405nm_Normalized2 = 2 * Mie_SmallKCl_405nm_Intensity_flip /Mie_SmallKCl_405nm_Integral
+Mie_SmallKCl_405nm_Full_Spline = CubicSpline(Mie_SmallKCl_405nm_cosd_flip, Mie_SmallKCl_405nm_Normalized2)
 # This spline is what we will be using hence forth. It describes (extrapolated; 0-180 deg) lab data using a series of piecewise polynomials in order to create a continuous set of functions wrt cos_theta
-Mie_SmallKCl_405nm_Full_Spline = CubicSpline(Mie_SmallKCl_405nm_cosd_flip, Mie_SmallKCl_405nm_Intensity_flip)
+#Mie_SmallKCl_405nm_Full_Spline = CubicSpline(Mie_SmallKCl_405nm_cosd_flip, Mie_SmallKCl_405nm_Intensity_flip)
 #SmallKCl_405nm_Full_Spline = CubicSpline(SmallKCl_405nm_cosd, SmallKCl_405nm_Intensity_flip)
 #SmallKCl_405nm_Full_Final = SmallKCl_405nm_Full_Spline(SmallKCl_405nm_cosd_flip)
 
@@ -132,8 +153,11 @@ Mie_MediumKCl_405nm_cosd = Mie_MediumKCl_405nm_Array[:,2] #extract 3rd column (c
 Mie_MediumKCl_405nm_Intensity = Mie_MediumKCl_405nm_Array[:,1] #extract 2nd column (normalized intensity)
 Mie_MediumKCl_405nm_cosd_flip = np.flip(Mie_MediumKCl_405nm_cosd)  # Reverse these bc CubicSpline needs x in order of increasing
 Mie_MediumKCl_405nm_Intensity_flip = np.flip(Mie_MediumKCl_405nm_Intensity)
+Mie_MediumKCl_405nm_Integral = np.trapz(Mie_MediumKCl_405nm_Intensity_flip, Mie_MediumKCl_405nm_cosd_flip)
+Mie_MediumKCl_405nm_Normalized2 = 2 * Mie_MediumKCl_405nm_Intensity_flip /Mie_MediumKCl_405nm_Integral
+Mie_MediumKCl_405nm_Full_Spline = CubicSpline(Mie_MediumKCl_405nm_cosd_flip, Mie_MediumKCl_405nm_Normalized2)
 # This spline is what we will be using hence forth. It describes (extrapolated; 0-180 deg) lab data using a series of piecewise polynomials in order to create a continuous set of functions wrt cos_theta
-Mie_MediumKCl_405nm_Full_Spline = CubicSpline(Mie_MediumKCl_405nm_cosd_flip, Mie_MediumKCl_405nm_Intensity_flip)
+#Mie_MediumKCl_405nm_Full_Spline = CubicSpline(Mie_MediumKCl_405nm_cosd_flip, Mie_MediumKCl_405nm_Intensity_flip)
 #SmallKCl_405nm_Full_Spline = CubicSpline(SmallKCl_405nm_cosd, SmallKCl_405nm_Intensity_flip)
 #SmallKCl_405nm_Full_Final = SmallKCl_405nm_Full_Spline(SmallKCl_405nm_cosd_flip)
 
@@ -144,8 +168,11 @@ Mie_LargeKCl_405nm_cosd = Mie_LargeKCl_405nm_Array[:,2] #extract 3rd column (cos
 Mie_LargeKCl_405nm_Intensity = Mie_LargeKCl_405nm_Array[:,1] #extract 2nd column (normalized intensity)
 Mie_LargeKCl_405nm_cosd_flip = np.flip(Mie_LargeKCl_405nm_cosd)  # Reverse these bc CubicSpline needs x in order of increasing
 Mie_LargeKCl_405nm_Intensity_flip = np.flip(Mie_LargeKCl_405nm_Intensity)
+Mie_LargeKCl_405nm_Integral = np.trapz(Mie_LargeKCl_405nm_Intensity_flip, Mie_LargeKCl_405nm_cosd_flip)
+Mie_LargeKCl_405nm_Normalized2 = 2 * Mie_LargeKCl_405nm_Intensity_flip /Mie_LargeKCl_405nm_Integral
+Mie_LargeKCl_405nm_Full_Spline = CubicSpline(Mie_LargeKCl_405nm_cosd_flip, Mie_LargeKCl_405nm_Normalized2)
 # This spline is what we will be using hence forth. It describes (extrapolated; 0-180 deg) lab data using a series of piecewise polynomials in order to create a continuous set of functions wrt cos_theta
-Mie_LargeKCl_405nm_Full_Spline = CubicSpline(Mie_LargeKCl_405nm_cosd_flip, Mie_LargeKCl_405nm_Intensity_flip)
+#Mie_LargeKCl_405nm_Full_Spline = CubicSpline(Mie_LargeKCl_405nm_cosd_flip, Mie_LargeKCl_405nm_Intensity_flip)
 #SmallKCl_405nm_Full_Spline = CubicSpline(SmallKCl_405nm_cosd, SmallKCl_405nm_Intensity_flip)
 #SmallKCl_405nm_Full_Final = SmallKCl_405nm_Full_Spline(SmallKCl_405nm_cosd_flip)
 
@@ -156,8 +183,11 @@ Mie_SmallKCl_532nm_cosd = Mie_SmallKCl_532nm_Array[:,2] #extract 3rd column (cos
 Mie_SmallKCl_532nm_Intensity = Mie_SmallKCl_532nm_Array[:,1] #extract 2nd column (normalized intensity)
 Mie_SmallKCl_532nm_cosd_flip = np.flip(Mie_SmallKCl_532nm_cosd)  # Reverse these bc CubicSpline needs x in order of increasing
 Mie_SmallKCl_532nm_Intensity_flip = np.flip(Mie_SmallKCl_532nm_Intensity)
+Mie_SmallKCl_532nm_Integral = np.trapz(Mie_SmallKCl_532nm_Intensity_flip, Mie_SmallKCl_532nm_cosd_flip)
+Mie_SmallKCl_532nm_Normalized2 = 2 * Mie_SmallKCl_532nm_Intensity_flip /Mie_SmallKCl_532nm_Integral
+Mie_SmallKCl_532nm_Full_Spline = CubicSpline(Mie_SmallKCl_532nm_cosd_flip, Mie_SmallKCl_532nm_Normalized2)
 # This spline is what we will be using hence forth. It describes (extrapolated; 0-180 deg) lab data using a series of piecewise polynomials in order to create a continuous set of functions wrt cos_theta
-Mie_SmallKCl_532nm_Full_Spline = CubicSpline(Mie_SmallKCl_532nm_cosd_flip, Mie_SmallKCl_532nm_Intensity_flip)
+#Mie_SmallKCl_532nm_Full_Spline = CubicSpline(Mie_SmallKCl_532nm_cosd_flip, Mie_SmallKCl_532nm_Intensity_flip)
 #SmallKCl_532nm_Full_Spline = CubicSpline(SmallKCl_532nm_cosd, SmallKCl_532nm_Intensity_flip)
 #SmallKCl_532nm_Full_Final = SmallKCl_532nm_Full_Spline(SmallKCl_532nm_cosd_flip)
 
@@ -168,8 +198,11 @@ Mie_MediumKCl_532nm_cosd = Mie_MediumKCl_532nm_Array[:,2] #extract 3rd column (c
 Mie_MediumKCl_532nm_Intensity = Mie_MediumKCl_532nm_Array[:,1] #extract 2nd column (normalized intensity)
 Mie_MediumKCl_532nm_cosd_flip = np.flip(Mie_MediumKCl_532nm_cosd)  # Reverse these bc CubicSpline needs x in order of increasing
 Mie_MediumKCl_532nm_Intensity_flip = np.flip(Mie_MediumKCl_532nm_Intensity)
+Mie_MediumKCl_532nm_Integral = np.trapz(Mie_MediumKCl_532nm_Intensity_flip, Mie_MediumKCl_532nm_cosd_flip)
+Mie_MediumKCl_532nm_Normalized2 = 2 * Mie_MediumKCl_532nm_Intensity_flip /Mie_MediumKCl_532nm_Integral
+Mie_MediumKCl_532nm_Full_Spline = CubicSpline(Mie_MediumKCl_532nm_cosd_flip, Mie_MediumKCl_532nm_Normalized2)
 # This spline is what we will be using hence forth. It describes (extrapolated; 0-180 deg) lab data using a series of piecewise polynomials in order to create a continuous set of functions wrt cos_theta
-Mie_MediumKCl_532nm_Full_Spline = CubicSpline(Mie_MediumKCl_532nm_cosd_flip, Mie_MediumKCl_532nm_Intensity_flip)
+#Mie_MediumKCl_532nm_Full_Spline = CubicSpline(Mie_MediumKCl_532nm_cosd_flip, Mie_MediumKCl_532nm_Intensity_flip)
 #SmallKCl_532nm_Full_Spline = CubicSpline(SmallKCl_532nm_cosd, SmallKCl_532nm_Intensity_flip)
 #SmallKCl_532nm_Full_Final = SmallKCl_532nm_Full_Spline(SmallKCl_532nm_cosd_flip)
 
@@ -180,52 +213,55 @@ Mie_LargeKCl_532nm_cosd = Mie_LargeKCl_532nm_Array[:,2] #extract 3rd column (cos
 Mie_LargeKCl_532nm_Intensity = Mie_LargeKCl_532nm_Array[:,1] #extract 2nd column (normalized intensity)
 Mie_LargeKCl_532nm_cosd_flip = np.flip(Mie_LargeKCl_532nm_cosd)  # Reverse these bc CubicSpline needs x in order of increasing
 Mie_LargeKCl_532nm_Intensity_flip = np.flip(Mie_LargeKCl_532nm_Intensity)
+Mie_LargeKCl_532nm_Integral = np.trapz(Mie_LargeKCl_532nm_Intensity_flip, Mie_LargeKCl_532nm_cosd_flip)
+Mie_LargeKCl_532nm_Normalized2 = 2 * Mie_LargeKCl_532nm_Intensity_flip /Mie_LargeKCl_532nm_Integral
+Mie_LargeKCl_532nm_Full_Spline = CubicSpline(Mie_LargeKCl_532nm_cosd_flip, Mie_LargeKCl_532nm_Normalized2)
 # This spline is what we will be using hence forth. It describes (extrapolated; 0-180 deg) lab data using a series of piecewise polynomials in order to create a continuous set of functions wrt cos_theta
-Mie_LargeKCl_532nm_Full_Spline = CubicSpline(Mie_LargeKCl_532nm_cosd_flip, Mie_LargeKCl_532nm_Intensity_flip)
+#Mie_LargeKCl_532nm_Full_Spline = CubicSpline(Mie_LargeKCl_532nm_cosd_flip, Mie_LargeKCl_532nm_Intensity_flip)
 #SmallKCl_532nm_Full_Spline = CubicSpline(SmallKCl_532nm_cosd, SmallKCl_532nm_Intensity_flip)
 #SmallKCl_532nm_Full_Final = SmallKCl_532nm_Full_Spline(SmallKCl_532nm_cosd_flip)
 
 fig, ax = plt.subplots(1,3, figsize=(20, 8))
-ax[0].plot(np.arccos(SmallKCl_405nm_cosd_flip), SmallKCl_405nm_Intensity_flip, label="LAB")
+ax[0].plot(np.arccos(SmallKCl_405nm_cosd_flip), SmallKCl_405nm_Normalized2, label="LAB")
 #ax.plot(np.arccos(LargeKCl_405nm_cosd_flip), LargeKCl_405nm_Intensity_flip)
 #ax.plot(np.arccos(MediumKCl_405nm_cosd_flip), MediumKCl_405nm_Intensity_flip)
 
-ax[0].plot(np.arccos(Mie_SmallKCl_405nm_cosd_flip), Mie_SmallKCl_405nm_Intensity_flip, label="Mie")
+ax[0].plot(np.arccos(Mie_SmallKCl_405nm_cosd_flip), Mie_SmallKCl_405nm_Normalized2, label="Mie")
 
 ax[0].set_xlabel('Theta (rad)')
 ax[0].set_ylabel('p_single (intensity)')
 ax[0].set_title('405nm Small')
 ax[0].set_yscale('log')
 #ax.set_xlim([0, 180])
-ax[0].set_ylim([0.0001, 10])
+ax[0].set_ylim([3e-2, 500])
 ax[0].legend()
 
-ax[1].plot(np.arccos(MediumKCl_405nm_cosd_flip), MediumKCl_405nm_Intensity_flip, label="LAB")
+ax[1].plot(np.arccos(MediumKCl_405nm_cosd_flip), MediumKCl_405nm_Normalized2, label="LAB")
 #ax.plot(np.arccos(LargeKCl_405nm_cosd_flip), LargeKCl_405nm_Intensity_flip)
 #ax.plot(np.arccos(MediumKCl_405nm_cosd_flip), MediumKCl_405nm_Intensity_flip)
 
-ax[1].plot(np.arccos(Mie_MediumKCl_405nm_cosd_flip), Mie_MediumKCl_405nm_Intensity_flip, label="Mie")
+ax[1].plot(np.arccos(Mie_MediumKCl_405nm_cosd_flip), Mie_MediumKCl_405nm_Normalized2, label="Mie")
 
 ax[1].set_xlabel('Theta (rad)')
 ax[1].set_ylabel('p_single (intensity)')
 ax[1].set_title('405nm Medium')
 ax[1].set_yscale('log')
 #ax.set_xlim([0, 180])
-ax[1].set_ylim([0.0001, 10])
+ax[1].set_ylim([3e-2, 500])
 ax[1].legend()
 
-ax[2].plot(np.arccos(LargeKCl_405nm_cosd_flip), LargeKCl_405nm_Intensity_flip, label="LAB")
+ax[2].plot(np.arccos(LargeKCl_405nm_cosd_flip), LargeKCl_405nm_Normalized2, label="LAB")
 #ax.plot(np.arccos(LargeKCl_405nm_cosd_flip), LargeKCl_405nm_Intensity_flip)
 #ax.plot(np.arccos(MediumKCl_405nm_cosd_flip), MediumKCl_405nm_Intensity_flip)
 
-ax[2].plot(np.arccos(Mie_LargeKCl_405nm_cosd_flip), Mie_LargeKCl_405nm_Intensity_flip, label="Mie")
+ax[2].plot(np.arccos(Mie_LargeKCl_405nm_cosd_flip), Mie_LargeKCl_405nm_Normalized2, label="Mie")
 
 ax[2].set_xlabel('Theta (rad)')
 ax[2].set_ylabel('p_single (intensity)')
 ax[2].set_title('405nm Large')
 ax[2].set_yscale('log')
 #ax.set_xlim([0, 180])
-ax[2].set_ylim([0.0001, 10])
+ax[2].set_ylim([3e-2, 500])
 ax[2].legend()
 
 plt.show()
@@ -233,46 +269,46 @@ plt.show()
 
 
 fig, ax = plt.subplots(1,3, figsize=(20, 8))
-ax[0].plot(np.arccos(SmallKCl_532nm_cosd_flip), SmallKCl_532nm_Intensity_flip, label="LAB")
+ax[0].plot(np.arccos(SmallKCl_532nm_cosd_flip), SmallKCl_532nm_Normalized2, label="LAB")
 #ax.plot(np.arccos(LargeKCl_532nm_cosd_flip), LargeKCl_532nm_Intensity_flip)
 #ax.plot(np.arccos(MediumKCl_532nm_cosd_flip), MediumKCl_532nm_Intensity_flip)
 
-ax[0].plot(np.arccos(Mie_SmallKCl_532nm_cosd_flip), Mie_SmallKCl_532nm_Intensity_flip, label="Mie")
+ax[0].plot(np.arccos(Mie_SmallKCl_532nm_cosd_flip), Mie_SmallKCl_532nm_Normalized2, label="Mie")
 
 ax[0].set_xlabel('Theta (rad)')
 ax[0].set_ylabel('p_single (intensity)')
 ax[0].set_title('532nm Small')
 ax[0].set_yscale('log')
 #ax.set_xlim([0, 180])
-ax[0].set_ylim([0.0001, 10])
+ax[0].set_ylim([3e-2, 500])
 ax[0].legend()
 
-ax[1].plot(np.arccos(MediumKCl_532nm_cosd_flip), MediumKCl_532nm_Intensity_flip, label="LAB")
+ax[1].plot(np.arccos(MediumKCl_532nm_cosd_flip), MediumKCl_532nm_Normalized2, label="LAB")
 #ax.plot(np.arccos(LargeKCl_532nm_cosd_flip), LargeKCl_532nm_Intensity_flip)
 #ax.plot(np.arccos(MediumKCl_532nm_cosd_flip), MediumKCl_532nm_Intensity_flip)
 
-ax[1].plot(np.arccos(Mie_MediumKCl_532nm_cosd_flip), Mie_MediumKCl_532nm_Intensity_flip, label="Mie")
+ax[1].plot(np.arccos(Mie_MediumKCl_532nm_cosd_flip), Mie_MediumKCl_532nm_Normalized2, label="Mie")
 
 ax[1].set_xlabel('Theta (rad)')
 ax[1].set_ylabel('p_single (intensity)')
 ax[1].set_title('532nm Medium')
 ax[1].set_yscale('log')
 #ax.set_xlim([0, 180])
-ax[1].set_ylim([0.0001, 10])
+ax[1].set_ylim([3e-2, 500])
 ax[1].legend()
 
-ax[2].plot(np.arccos(LargeKCl_532nm_cosd_flip), LargeKCl_532nm_Intensity_flip, label="LAB")
+ax[2].plot(np.arccos(LargeKCl_532nm_cosd_flip), LargeKCl_532nm_Normalized2, label="LAB")
 #ax.plot(np.arccos(LargeKCl_532nm_cosd_flip), LargeKCl_532nm_Intensity_flip)
 #ax.plot(np.arccos(MediumKCl_532nm_cosd_flip), MediumKCl_532nm_Intensity_flip)
 
-ax[2].plot(np.arccos(Mie_LargeKCl_532nm_cosd_flip), Mie_LargeKCl_532nm_Intensity_flip, label="Mie")
+ax[2].plot(np.arccos(Mie_LargeKCl_532nm_cosd_flip), Mie_LargeKCl_532nm_Normalized2, label="Mie")
 
 ax[2].set_xlabel('Theta (rad)')
 ax[2].set_ylabel('p_single (intensity)')
 ax[2].set_title('532nm Large')
 ax[2].set_yscale('log')
 #ax.set_xlim([0, 180])
-ax[2].set_ylim([0.0001, 10])
+ax[2].set_ylim([3e-2, 500])
 ax[2].legend()
 
 plt.show()
@@ -887,6 +923,39 @@ def get_reflected_3d(nlevel, wno,nwno, numg,numt, dtau_3d, tau_3d, w0_3d, cosb_3
                                 +(1-f)*(1-g_back**2)
                                 /sqrt((1+g_back**2+2*g_back*cos_theta)**3))
 
+                print("cos_theta:", cos_theta)
+                print("g_back:", g_back[21,170])
+                print("g_forward:", g_forward[21,170])
+                print("f",f.shape)
+
+                print("nwno", nwno)
+
+                g_forward1 = g_forward[21,170]
+                g_back1 = g_back[21,170]
+                f1 = f[21,170]
+
+
+                def p_single1(cos_theta, g_forward1, g_back1, f1):
+                    term1 = (f1 * (1-g_forward1**2)
+                                /sqrt((1+g_forward1**2+2*g_forward1*cos_theta)**3) 
+                                #second term of TTHG: backward scattering
+                                +(1-f1)*(1-g_back1**2)
+                                /sqrt((1+g_back1**2+2*g_back1*cos_theta)**3))
+                    return term1
+                
+                cos_theta_values = np.linspace(-1,1,100)
+
+                p_single_values = p_single1(cos_theta_values, g_forward1, g_back1, f1)
+
+                # plt.plot(cos_theta_values, p_single_values)
+                # plt.xlabel('cos(theta)')
+                # plt.ylabel('p_single')
+                # plt.title('~ 1mbar @ 604 nm')
+                # plt.yscale('log')
+                # plt.grid(True)
+                # plt.show()
+
+
             elif single_phase==3:#'TTHG_ray':
                 #Phase function for single scattering albedo frum Solar beam
                 #uses the Two term Henyey-Greenstein function with the additiona rayleigh component 
@@ -904,6 +973,15 @@ def get_reflected_3d(nlevel, wno,nwno, numg,numt, dtau_3d, tau_3d, w0_3d, cosb_3
             elif single_phase==4:#'LAB_405nm_Small':
                 p_single = SmallKCl_405nm_Full_Spline(-cos_theta)
                 #p_single = SmallKCl_405nm_Full_Final(cos_theta)
+
+                def p_single1(cos_theta):
+                    term1 = SmallKCl_405nm_Full_Spline(-cos_theta)
+                    return term1
+                
+                cos_theta_values = np.linspace(-1,1,100)
+
+                p_single_values = p_single1(cos_theta_values)
+
             elif single_phase==5: # 'LAB_405nm_Medium':
                 p_single = MediumKCl_405nm_Full_Spline(-cos_theta)
                 #p_single = MediumKCl_405nm_Full_Final(cos_theta)
@@ -914,6 +992,15 @@ def get_reflected_3d(nlevel, wno,nwno, numg,numt, dtau_3d, tau_3d, w0_3d, cosb_3
                 #p_single = np.float64(float(SmallKCl_532nm_Full_Spline(cos_theta)))
                 p_single = SmallKCl_532nm_Full_Spline(-cos_theta)
                 #p_single = SmallKCl_532nm_Full_Final(cos_theta)
+
+                def p_single1(cos_theta):
+                    term1 = SmallKCl_532nm_Full_Spline(-cos_theta)
+                    return term1
+                
+                cos_theta_values = np.linspace(-1,1,100)
+
+                p_single_values = p_single1(cos_theta_values)
+
             elif single_phase==8: # 'LAB_532nm_Medium':
                 p_single = MediumKCl_532nm_Full_Spline(-cos_theta)
                 #p_single = MediumKCl_532nm_Full_Final(cos_theta)
@@ -924,6 +1011,15 @@ def get_reflected_3d(nlevel, wno,nwno, numg,numt, dtau_3d, tau_3d, w0_3d, cosb_3
             elif single_phase==10:#'MIE_405nm_Small':
                 p_single = Mie_SmallKCl_405nm_Full_Spline(-cos_theta)
                 #p_single = SmallKCl_405nm_Full_Final(cos_theta)
+
+                def p_single1(cos_theta):
+                    term1 = Mie_SmallKCl_405nm_Full_Spline(-cos_theta)
+                    return term1
+                
+                cos_theta_values = np.linspace(-1,1,100)
+
+                p_single_values = p_single1(cos_theta_values)
+
             elif single_phase==11: # 'MIE_405nm_Medium':
                 p_single = Mie_MediumKCl_405nm_Full_Spline(-cos_theta)
                 #p_single = MediumKCl_405nm_Full_Final(cos_theta)
@@ -934,6 +1030,15 @@ def get_reflected_3d(nlevel, wno,nwno, numg,numt, dtau_3d, tau_3d, w0_3d, cosb_3
                 #p_single = np.float64(float(SmallKCl_532nm_Full_Spline(cos_theta)))
                 p_single = Mie_SmallKCl_532nm_Full_Spline(-cos_theta)
                 #p_single = SmallKCl_532nm_Full_Final(cos_theta)
+
+                def p_single1(cos_theta):
+                    term1 = Mie_SmallKCl_532nm_Full_Spline(-cos_theta)
+                    return term1
+                
+                cos_theta_values = np.linspace(-1,1,100)
+
+                p_single_values = p_single1(cos_theta_values)
+
             elif single_phase==14: # 'MIE_532nm_Medium':
                 p_single = Mie_MediumKCl_532nm_Full_Spline(-cos_theta)
                 #p_single = MediumKCl_532nm_Full_Final(cos_theta)
@@ -987,6 +1092,17 @@ def get_reflected_3d(nlevel, wno,nwno, numg,numt, dtau_3d, tau_3d, w0_3d, cosb_3
     # ax.set_xlabel('Cos_Theta')
     # ax.set_ylabel('Single scattering intensity')
     # ax.set_title('PICASO Phase Fcns')
+            
+    plt.plot(cos_theta_values, p_single_values)
+    plt.xlabel('cos(theta)')
+    plt.ylabel('p_single')
+    plt.title('TTHG Phase Fcn @ ~1mbar ')
+    plt.yscale('log')
+    plt.grid(True)
+    plt.show()
+
+    area = np.trapz(p_single_values, cos_theta_values)
+    print("area =", area)
 
     return xint_at_top, p_single
 
