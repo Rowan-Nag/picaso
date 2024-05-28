@@ -3063,6 +3063,8 @@ class inputs():
 
         if 'shift' in self.inputs: 
             shift =  self.inputs['shift']
+            #shift =  self.inputs['shift'] + 180
+            print("shift", shift)
         else: 
             raise Exception('Oops! It looks like cloud_4d is being run before atmosphere_4d. Please run atmosphere_4d first so that you can speficy a shift, relative to the phase. This shift will then be used in cloud_4d.')
                 
@@ -3176,11 +3178,11 @@ class inputs():
                         #add total shift statement
                         shift_back = new_lon_transfer + micro_shift #- 180
 
-                if 'new_lon' in locals():
-                    # variable exists
-                    print(ng)
-                else:
-                    raise Exception("""Only num_gangle = 6 or num_gangle >= 10 is currently accepted for reflected light phase curve calculations. Please adjust your phase-resolved spatial resolution.""")
+                # if 'new_lon' in locals():
+                #     # variable exists
+                #     print(ng)
+                # else:
+                #     raise Exception("""Only num_gangle = 6 or num_gangle >= 10 is currently accepted for reflected light phase curve calculations. Please adjust your phase-resolved spatial resolution.""")
 
                 new_lat_totals.append(new_lat)
                 new_lon_totals.append(new_lon)
@@ -3188,8 +3190,8 @@ class inputs():
                 #new_lon_totals = new_lon_totals[i] - 180
                 #total_shift = (iphase*180/np.pi + (shift[i] - shift_back)) % 360
                 # total_shift = (iphase*180/np.pi + (shift[i] + shift_back)) % 360
-                total_shift = (iphase*180/np.pi + shift[i]) % 360 
-                change_zero_pt = og_lon +  total_shift + shift_back
+                total_shift = (iphase*180/np.pi + shift[i]) % 360
+                change_zero_pt = og_lon + total_shift + shift_back
                 change_zero_pt[change_zero_pt>360]=change_zero_pt[change_zero_pt>360]%360 #such that always between -180 and 180
                 change_zero_pt[change_zero_pt>180]=change_zero_pt[change_zero_pt>180]%180-180 #such that always between -180 and 180
                 #change_zero_pt = 0
