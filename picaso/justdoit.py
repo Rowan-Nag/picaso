@@ -109,8 +109,7 @@ def picaso(bundle,opacityclass, dimension = '1d',calculation='reflected', full_o
     inputs = bundle.inputs
 
     wno = opacityclass.wno
-    print("wno", wno)
-
+    #print("wno", wno)
     nwno = opacityclass.nwno
     ngauss = opacityclass.ngauss
     gauss_wts = opacityclass.gauss_wts #for opacity
@@ -3064,6 +3063,8 @@ class inputs():
 
         if 'shift' in self.inputs: 
             shift =  self.inputs['shift']
+            #shift =  self.inputs['shift'] + 180
+            print("shift", shift)
         else: 
             raise Exception('Oops! It looks like cloud_4d is being run before atmosphere_4d. Please run atmosphere_4d first so that you can speficy a shift, relative to the phase. This shift will then be used in cloud_4d.')
                 
@@ -3177,11 +3178,11 @@ class inputs():
                         #add total shift statement
                         shift_back = new_lon_transfer + micro_shift #- 180
 
-                if 'new_lon' in locals():
-                    # variable exists
-                    print(ng)
-                else:
-                    raise Exception("""Only num_gangle = 6 or num_gangle >= 10 is currently accepted for reflected light phase curve calculations. Please adjust your phase-resolved spatial resolution.""")
+                # if 'new_lon' in locals():
+                #     # variable exists
+                #     print(ng)
+                # else:
+                #     raise Exception("""Only num_gangle = 6 or num_gangle >= 10 is currently accepted for reflected light phase curve calculations. Please adjust your phase-resolved spatial resolution.""")
 
                 new_lat_totals.append(new_lat)
                 new_lon_totals.append(new_lon)
@@ -3189,8 +3190,8 @@ class inputs():
                 #new_lon_totals = new_lon_totals[i] - 180
                 #total_shift = (iphase*180/np.pi + (shift[i] - shift_back)) % 360
                 # total_shift = (iphase*180/np.pi + (shift[i] + shift_back)) % 360
-                total_shift = (iphase*180/np.pi + shift[i]) % 360 
-                change_zero_pt = og_lon +  total_shift + shift_back
+                total_shift = (iphase*180/np.pi + shift[i]) % 360
+                change_zero_pt = og_lon + total_shift + shift_back
                 change_zero_pt[change_zero_pt>360]=change_zero_pt[change_zero_pt>360]%360 #such that always between -180 and 180
                 change_zero_pt[change_zero_pt>180]=change_zero_pt[change_zero_pt>180]%180-180 #such that always between -180 and 180
                 #change_zero_pt = 0
@@ -4704,7 +4705,7 @@ def brown_dwarf_cld():
 def single_phase_options(printout=True):
     """Retrieve all the options for direct radation"""
     if printout: print("Can also set functional form of forward/back scattering in approx['TTHG_params']")
-    return ['cahoy','OTHG','TTHG','TTHG_ray','LAB_405nm_Small','LAB_405nm_Medium','LAB_405nm_Large','LAB_532nm_Small','LAB_532nm_Medium','LAB_532nm_Large', 'MIE_405nm_Small','MIE_405nm_Medium','MIE_405nm_Large','MIE_532nm_Small','MIE_532nm_Medium','MIE_532nm_Large']
+    return ['cahoy','OTHG','TTHG','TTHG_ray','LAB_405nm_Small','LAB_405nm_Medium','LAB_405nm_Large','LAB_532nm_Small','LAB_532nm_Medium','LAB_532nm_Large', 'MIE_405nm_Small','MIE_405nm_Medium','MIE_405nm_Large','MIE_532nm_Small','MIE_532nm_Medium','MIE_532nm_Large', 'TTHG_405nm_Small','TTHG_405nm_Medium','TTHG_405nm_Large','TTHG_532nm_Small','TTHG_532nm_Medium','TTHG_532nm_Large']
 def multi_phase_options(printout=True):
     """Retrieve all the options for multiple scattering radiation"""
     if printout: print("Can also set delta_eddington=True/False in approx['delta_eddington']")
