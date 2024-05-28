@@ -29,6 +29,11 @@ LargeKCl_405nm_Full_Spline = CubicSpline(LargeKCl_405nm_cosd_flip, LargeKCl_405n
 #LargeKCl_405nm_Full_Spline = CubicSpline(LargeKCl_405nm_cosd_flip, LargeKCl_405nm_Intensity_flip)
 #LargeKCl_405nm_Full_Spline = CubicSpline(LargeKCl_405nm_cosd, LargeKCl_405nm_Intensity_flip) # not these
 #LargeKCl_405nm_Full_Final = LargeKCl_405nm_Full_Spline(LargeKCl_405nm_cosd_flip) # not this
+## Calculating asymmetry parameter:
+LargeKCl_405nm_g_Num = np.trapz((LargeKCl_405nm_cosd_flip * LargeKCl_405nm_Intensity_flip), LargeKCl_405nm_cosd_flip)
+LargeKCl_405nm_g_Denom = np.trapz(LargeKCl_405nm_Intensity_flip, LargeKCl_405nm_cosd_flip)
+LargeKCl_405nm_g = LargeKCl_405nm_g_Num / LargeKCl_405nm_g_Denom
+print("405nm Large KCl LAB g = ",LargeKCl_405nm_g)
 
 #Medium 405 nm
 MediumKCl_405nm_Full = pd.read_csv("./KCL_data/MediumKCl_405nm_Full.txt",header=0)
@@ -44,6 +49,10 @@ MediumKCl_405nm_Full_Spline = CubicSpline(MediumKCl_405nm_cosd_flip, MediumKCl_4
 #MediumKCl_405nm_Full_Spline = CubicSpline(MediumKCl_405nm_cosd_flip, MediumKCl_405nm_Intensity_flip)
 #MediumKCl_405nm_Full_Spline = CubicSpline(MediumKCl_405nm_cosd, MediumKCl_405nm_Intensity_flip)
 #MediumKCl_405nm_Full_Final = MediumKCl_405nm_Full_Spline(MediumKCl_405nm_cosd_flip)
+MediumKCl_405nm_g_Num = np.trapz((MediumKCl_405nm_cosd_flip * MediumKCl_405nm_Intensity_flip), MediumKCl_405nm_cosd_flip)
+MediumKCl_405nm_g_Denom = np.trapz(MediumKCl_405nm_Intensity_flip, MediumKCl_405nm_cosd_flip)
+MediumKCl_405nm_g = MediumKCl_405nm_g_Num / MediumKCl_405nm_g_Denom
+print("405nm Medium KCl LAB g = ",MediumKCl_405nm_g)
 
 #Small 405 nm
 SmallKCl_405nm_Full = pd.read_csv("./KCL_data/SmallKCl_405nm_Full.txt",header=0)
@@ -59,6 +68,10 @@ SmallKCl_405nm_Full_Spline = CubicSpline(SmallKCl_405nm_cosd_flip, SmallKCl_405n
 #SmallKCl_405nm_Full_Spline = CubicSpline(SmallKCl_405nm_cosd_flip, SmallKCl_405nm_Intensity_flip)
 #SmallKCl_405nm_Full_Spline = CubicSpline(SmallKCl_405nm_cosd, SmallKCl_405nm_Intensity_flip)
 #SmallKCl_405nm_Full_Final = SmallKCl_405nm_Full_Spline(SmallKCl_405nm_cosd_flip)
+SmallKCl_405nm_g_Num = np.trapz((SmallKCl_405nm_cosd_flip * SmallKCl_405nm_Intensity_flip), SmallKCl_405nm_cosd_flip)
+SmallKCl_405nm_g_Denom = np.trapz(SmallKCl_405nm_Intensity_flip, SmallKCl_405nm_cosd_flip)
+SmallKCl_405nm_g = SmallKCl_405nm_g_Num / SmallKCl_405nm_g_Denom
+print("405nm Small KCl LAB g = ",SmallKCl_405nm_g)
 
 # fig, ax = plt.subplots()
 # ax.plot(SmallKCl_405nm_cosd_flip, SmallKCl_405nm_Intensity_flip)
@@ -98,6 +111,10 @@ LargeKCl_532nm_Full_Spline = CubicSpline(LargeKCl_532nm_cosd_flip, LargeKCl_532n
 #LargeKCl_532nm_Full_Spline = CubicSpline(LargeKCl_532nm_cosd_flip, LargeKCl_532nm_Intensity_flip)
 #LargeKCl_532nm_Full_Spline = CubicSpline(LargeKCl_532nm_cosd, LargeKCl_532nm_Intensity_flip)
 #LargeKCl_532nm_Full_Final = LargeKCl_532nm_Full_Spline(LargeKCl_532nm_cosd_flip)
+LargeKCl_532nm_g_Num = np.trapz((LargeKCl_532nm_cosd_flip * LargeKCl_532nm_Intensity_flip), LargeKCl_532nm_cosd_flip)
+LargeKCl_532nm_g_Denom = np.trapz(LargeKCl_532nm_Intensity_flip, LargeKCl_532nm_cosd_flip)
+LargeKCl_532nm_g = LargeKCl_532nm_g_Num / LargeKCl_532nm_g_Denom
+print("532nm Large KCl LAB g = ",LargeKCl_532nm_g)
 
 #Medium 532nm
 MediumKCl_532nm_Full = pd.read_csv("./KCL_data/MediumKCl_532nm_Full.txt",header=0)
@@ -113,6 +130,10 @@ MediumKCl_532nm_Full_Spline = CubicSpline(MediumKCl_532nm_cosd_flip, MediumKCl_5
 #MediumKCl_532nm_Full_Spline = CubicSpline(MediumKCl_532nm_cosd_flip, MediumKCl_532nm_Intensity_flip)
 #MediumKCl_532nm_Full_Spline = CubicSpline(MediumKCl_532nm_cosd, MediumKCl_532nm_Intensity_flip)
 #MediumKCl_532nm_Full_Final = MediumKCl_532nm_Full_Spline(MediumKCl_532nm_cosd_flip)
+MediumKCl_532nm_g_Num = np.trapz((MediumKCl_532nm_cosd_flip * MediumKCl_532nm_Intensity_flip), MediumKCl_532nm_cosd_flip)
+MediumKCl_532nm_g_Denom = np.trapz(MediumKCl_532nm_Intensity_flip, MediumKCl_532nm_cosd_flip)
+MediumKCl_532nm_g = MediumKCl_532nm_g_Num / MediumKCl_532nm_g_Denom
+print("532nm Medium KCl LAB g = ",MediumKCl_532nm_g)
 
 #Small 532 nm
 SmallKCl_532nm_Full = pd.read_csv("./KCL_data/SmallKCl_532nm_Full.txt",header=0)
@@ -128,6 +149,10 @@ SmallKCl_532nm_Full_Spline = CubicSpline(SmallKCl_532nm_cosd_flip, SmallKCl_532n
 #SmallKCl_532nm_Full_Spline = CubicSpline(SmallKCl_532nm_cosd_flip, SmallKCl_532nm_Intensity_flip)
 #SmallKCl_532nm_Full_Spline = CubicSpline(SmallKCl_532nm_cosd, SmallKCl_532nm_Intensity_flip)
 #SmallKCl_532nm_Full_Final = SmallKCl_532nm_Full_Spline(SmallKCl_532nm_cosd_flip)
+SmallKCl_532nm_g_Num = np.trapz((SmallKCl_532nm_cosd_flip * SmallKCl_532nm_Intensity_flip), SmallKCl_532nm_cosd_flip)
+SmallKCl_532nm_g_Denom = np.trapz(SmallKCl_532nm_Intensity_flip, SmallKCl_532nm_cosd_flip)
+SmallKCl_532nm_g = SmallKCl_532nm_g_Num / SmallKCl_532nm_g_Denom
+print("532nm Small KCl LAB g = ",SmallKCl_532nm_g)
 
 #### MIE Files ####
 
@@ -145,6 +170,10 @@ Mie_SmallKCl_405nm_Full_Spline = CubicSpline(Mie_SmallKCl_405nm_cosd_flip, Mie_S
 #Mie_SmallKCl_405nm_Full_Spline = CubicSpline(Mie_SmallKCl_405nm_cosd_flip, Mie_SmallKCl_405nm_Intensity_flip)
 #SmallKCl_405nm_Full_Spline = CubicSpline(SmallKCl_405nm_cosd, SmallKCl_405nm_Intensity_flip)
 #SmallKCl_405nm_Full_Final = SmallKCl_405nm_Full_Spline(SmallKCl_405nm_cosd_flip)
+Mie_SmallKCl_405nm_g_Num = np.trapz((Mie_SmallKCl_405nm_cosd_flip * Mie_SmallKCl_405nm_Intensity_flip), Mie_SmallKCl_405nm_cosd_flip)
+Mie_SmallKCl_405nm_g_Denom = np.trapz(Mie_SmallKCl_405nm_Intensity_flip, Mie_SmallKCl_405nm_cosd_flip)
+Mie_SmallKCl_405nm_g = Mie_SmallKCl_405nm_g_Num / Mie_SmallKCl_405nm_g_Denom
+print("405nm Small KCl MIE g = ",Mie_SmallKCl_405nm_g)
 
 #Medium 405 nm MIE
 Mie_MediumKCl_405nm = pd.read_csv("./Mie_data/MiePlot_MediumKCl_405nm.txt",header=[0,1])
@@ -160,6 +189,10 @@ Mie_MediumKCl_405nm_Full_Spline = CubicSpline(Mie_MediumKCl_405nm_cosd_flip, Mie
 #Mie_MediumKCl_405nm_Full_Spline = CubicSpline(Mie_MediumKCl_405nm_cosd_flip, Mie_MediumKCl_405nm_Intensity_flip)
 #SmallKCl_405nm_Full_Spline = CubicSpline(SmallKCl_405nm_cosd, SmallKCl_405nm_Intensity_flip)
 #SmallKCl_405nm_Full_Final = SmallKCl_405nm_Full_Spline(SmallKCl_405nm_cosd_flip)
+Mie_MediumKCl_405nm_g_Num = np.trapz((Mie_MediumKCl_405nm_cosd_flip * Mie_MediumKCl_405nm_Intensity_flip), Mie_MediumKCl_405nm_cosd_flip)
+Mie_MediumKCl_405nm_g_Denom = np.trapz(Mie_MediumKCl_405nm_Intensity_flip, Mie_MediumKCl_405nm_cosd_flip)
+Mie_MediumKCl_405nm_g = Mie_MediumKCl_405nm_g_Num / Mie_MediumKCl_405nm_g_Denom
+print("405nm Medium KCl MIE g = ",Mie_MediumKCl_405nm_g)
 
 #Large 405 nm MIE
 Mie_LargeKCl_405nm = pd.read_csv("./Mie_data/MiePlot_LargeKCl_405nm.txt",header=[0,1])
@@ -175,6 +208,10 @@ Mie_LargeKCl_405nm_Full_Spline = CubicSpline(Mie_LargeKCl_405nm_cosd_flip, Mie_L
 #Mie_LargeKCl_405nm_Full_Spline = CubicSpline(Mie_LargeKCl_405nm_cosd_flip, Mie_LargeKCl_405nm_Intensity_flip)
 #SmallKCl_405nm_Full_Spline = CubicSpline(SmallKCl_405nm_cosd, SmallKCl_405nm_Intensity_flip)
 #SmallKCl_405nm_Full_Final = SmallKCl_405nm_Full_Spline(SmallKCl_405nm_cosd_flip)
+Mie_LargeKCl_405nm_g_Num = np.trapz((Mie_LargeKCl_405nm_cosd_flip * Mie_LargeKCl_405nm_Intensity_flip), Mie_LargeKCl_405nm_cosd_flip)
+Mie_LargeKCl_405nm_g_Denom = np.trapz(Mie_LargeKCl_405nm_Intensity_flip, Mie_LargeKCl_405nm_cosd_flip)
+Mie_LargeKCl_405nm_g = Mie_LargeKCl_405nm_g_Num / Mie_LargeKCl_405nm_g_Denom
+print("405nm Large KCl MIE g = ",Mie_LargeKCl_405nm_g)
 
 #Small 532 nm MIE
 Mie_SmallKCl_532nm = pd.read_csv("./Mie_data/MiePlot_SmallKCl_532nm.txt",header=[0,1])
@@ -190,6 +227,10 @@ Mie_SmallKCl_532nm_Full_Spline = CubicSpline(Mie_SmallKCl_532nm_cosd_flip, Mie_S
 #Mie_SmallKCl_532nm_Full_Spline = CubicSpline(Mie_SmallKCl_532nm_cosd_flip, Mie_SmallKCl_532nm_Intensity_flip)
 #SmallKCl_532nm_Full_Spline = CubicSpline(SmallKCl_532nm_cosd, SmallKCl_532nm_Intensity_flip)
 #SmallKCl_532nm_Full_Final = SmallKCl_532nm_Full_Spline(SmallKCl_532nm_cosd_flip)
+Mie_SmallKCl_532nm_g_Num = np.trapz((Mie_SmallKCl_532nm_cosd_flip * Mie_SmallKCl_532nm_Intensity_flip), Mie_SmallKCl_532nm_cosd_flip)
+Mie_SmallKCl_532nm_g_Denom = np.trapz(Mie_SmallKCl_532nm_Intensity_flip, Mie_SmallKCl_532nm_cosd_flip)
+Mie_SmallKCl_532nm_g = Mie_SmallKCl_532nm_g_Num / Mie_SmallKCl_532nm_g_Denom
+print("532nm Small KCl MIE g = ",Mie_SmallKCl_532nm_g)
 
 #Meidum 532 nm MIE
 Mie_MediumKCl_532nm = pd.read_csv("./Mie_data/MiePlot_MediumKCl_532nm.txt",header=[0,1])
@@ -205,6 +246,10 @@ Mie_MediumKCl_532nm_Full_Spline = CubicSpline(Mie_MediumKCl_532nm_cosd_flip, Mie
 #Mie_MediumKCl_532nm_Full_Spline = CubicSpline(Mie_MediumKCl_532nm_cosd_flip, Mie_MediumKCl_532nm_Intensity_flip)
 #SmallKCl_532nm_Full_Spline = CubicSpline(SmallKCl_532nm_cosd, SmallKCl_532nm_Intensity_flip)
 #SmallKCl_532nm_Full_Final = SmallKCl_532nm_Full_Spline(SmallKCl_532nm_cosd_flip)
+Mie_MediumKCl_532nm_g_Num = np.trapz((Mie_MediumKCl_532nm_cosd_flip * Mie_MediumKCl_532nm_Intensity_flip), Mie_MediumKCl_532nm_cosd_flip)
+Mie_MediumKCl_532nm_g_Denom = np.trapz(Mie_MediumKCl_532nm_Intensity_flip, Mie_MediumKCl_532nm_cosd_flip)
+Mie_MediumKCl_532nm_g = Mie_MediumKCl_532nm_g_Num / Mie_MediumKCl_532nm_g_Denom
+print("532nm Medium KCl MIE g = ",Mie_MediumKCl_532nm_g)
 
 #Large 532 nm MIE
 Mie_LargeKCl_532nm = pd.read_csv("./Mie_data/MiePlot_LargeKCl_532nm.txt",header=[0,1])
@@ -220,6 +265,10 @@ Mie_LargeKCl_532nm_Full_Spline = CubicSpline(Mie_LargeKCl_532nm_cosd_flip, Mie_L
 #Mie_LargeKCl_532nm_Full_Spline = CubicSpline(Mie_LargeKCl_532nm_cosd_flip, Mie_LargeKCl_532nm_Intensity_flip)
 #SmallKCl_532nm_Full_Spline = CubicSpline(SmallKCl_532nm_cosd, SmallKCl_532nm_Intensity_flip)
 #SmallKCl_532nm_Full_Final = SmallKCl_532nm_Full_Spline(SmallKCl_532nm_cosd_flip)
+Mie_LargeKCl_532nm_g_Num = np.trapz((Mie_LargeKCl_532nm_cosd_flip * Mie_LargeKCl_532nm_Intensity_flip), Mie_LargeKCl_532nm_cosd_flip)
+Mie_LargeKCl_532nm_g_Denom = np.trapz(Mie_LargeKCl_532nm_Intensity_flip, Mie_LargeKCl_532nm_cosd_flip)
+Mie_LargeKCl_532nm_g = Mie_LargeKCl_532nm_g_Num / Mie_LargeKCl_532nm_g_Denom
+print("532nm Large KCl MIE g = ",Mie_LargeKCl_532nm_g)
 
 fig, ax = plt.subplots(1,3, figsize=(20, 8))
 ax[0].plot(np.arccos(SmallKCl_405nm_cosd_flip), SmallKCl_405nm_Normalized2, label="LAB")
@@ -924,15 +973,15 @@ def get_reflected_3d(nlevel, wno,nwno, numg,numt, dtau_3d, tau_3d, w0_3d, cosb_3
                                 /sqrt((1+g_back**2+2*g_back*cos_theta)**3))
 
                 print("cos_theta:", cos_theta)
-                print("g_back:", g_back[21,170])
-                print("g_forward:", g_forward[21,170])
+                print("g_back:", g_back[:,170])
+                print("g_forward:", g_forward[:,170])
                 print("f",f.shape)
 
                 print("nwno", nwno)
 
-                g_forward1 = g_forward[21,170]
-                g_back1 = g_back[21,170]
-                f1 = f[21,170]
+                g_forward1 = g_forward[15,170]
+                g_back1 = g_back[15,170]
+                f1 = f[15,170]
 
 
                 def p_single1(cos_theta, g_forward1, g_back1, f1):
@@ -1044,7 +1093,61 @@ def get_reflected_3d(nlevel, wno,nwno, numg,numt, dtau_3d, tau_3d, w0_3d, cosb_3
                 #p_single = MediumKCl_532nm_Full_Final(cos_theta)
             elif single_phase==15: # 'MIE_532nm_Large':
                 p_single = Mie_LargeKCl_532nm_Full_Spline(-cos_theta)    
-                #p_single = LargeKCl_532nm_Full_Final(cos_theta)                                                    
+                #p_single = LargeKCl_532nm_Full_Final(cos_theta)
+            elif single_phase==16:#'TTHG_405nm_Small':
+                gf = Mie_SmallKCl_405nm_g
+                gb = - gf / 2
+                f0 = 1 - gb**2
+                p_single=(f0 * (1-gf**2)
+                                /sqrt((1+gf**2+2*gf*cos_theta)**3) 
+                                #second term of TTHG: backward scattering
+                                +(1-f0)*(1-gb**2)
+                                /sqrt((1+gb**2+2*gb*cos_theta)**3)) 
+            elif single_phase==17:#'TTHG_405nm_Medium':
+                gf = Mie_MediumKCl_405nm_g
+                gb = - gf / 2
+                f0 = 1 - gb**2
+                p_single=(f0 * (1-gf**2)
+                                /sqrt((1+gf**2+2*gf*cos_theta)**3) 
+                                #second term of TTHG: backward scattering
+                                +(1-f0)*(1-gb**2)
+                                /sqrt((1+gb**2+2*gb*cos_theta)**3))
+            elif single_phase==18:#'TTHG_405nm_Large':
+                gf = Mie_LargeKCl_405nm_g
+                gb = - gf / 2
+                f0 = 1 - gb**2
+                p_single=(f0 * (1-gf**2)
+                                /sqrt((1+gf**2+2*gf*cos_theta)**3) 
+                                #second term of TTHG: backward scattering
+                                +(1-f0)*(1-gb**2)
+                                /sqrt((1+gb**2+2*gb*cos_theta)**3))
+            elif single_phase==19:#'TTHG_532nm_Small':
+                gf = Mie_SmallKCl_532nm_g
+                gb = - gf / 2
+                f0 = 1 - gb**2
+                p_single=(f0 * (1-gf**2)
+                                /sqrt((1+gf**2+2*gf*cos_theta)**3) 
+                                #second term of TTHG: backward scattering
+                                +(1-f0)*(1-gb**2)
+                                /sqrt((1+gb**2+2*gb*cos_theta)**3))
+            elif single_phase==20:#'TTHG_532nm_Medium':
+                gf = Mie_MediumKCl_532nm_g
+                gb = - gf / 2
+                f0 = 1 - gb**2
+                p_single=(f0 * (1-gf**2)
+                                /sqrt((1+gf**2+2*gf*cos_theta)**3) 
+                                #second term of TTHG: backward scattering
+                                +(1-f0)*(1-gb**2)
+                                /sqrt((1+gb**2+2*gb*cos_theta)**3))    
+            elif single_phase==21:#'TTHG_532nm_Large':
+                gf = Mie_LargeKCl_532nm_g
+                gb = - gf / 2
+                f0 = 1 - gb**2
+                p_single=(f0 * (1-gf**2)
+                                /sqrt((1+gf**2+2*gf*cos_theta)**3) 
+                                #second term of TTHG: backward scattering
+                                +(1-f0)*(1-gb**2)
+                                /sqrt((1+gb**2+2*gb*cos_theta)**3))                                                   
                                                                         
             ################################ END OPTIONS FOR DIRECT SCATTERING####################
 
