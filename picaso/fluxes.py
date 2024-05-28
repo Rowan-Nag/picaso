@@ -923,29 +923,29 @@ def get_reflected_3d(nlevel, wno,nwno, numg,numt, dtau_3d, tau_3d, w0_3d, cosb_3
                                 +(1-f)*(1-g_back**2)
                                 /sqrt((1+g_back**2+2*g_back*cos_theta)**3))
 
-                print("cos_theta:", cos_theta)
-                print("g_back:", g_back[21,170])
-                print("g_forward:", g_forward[21,170])
-                print("f",f.shape)
+                # print("cos_theta:", cos_theta)
+                # print("g_back:", g_back[21,170])
+                # print("g_forward:", g_forward[21,170])
+                # print("f",f.shape)
 
-                print("nwno", nwno)
+                # print("nwno", nwno)
 
-                g_forward1 = g_forward[21,170]
-                g_back1 = g_back[21,170]
-                f1 = f[21,170]
+                # g_forward1 = g_forward[21,170]
+                # g_back1 = g_back[21,170]
+                # f1 = f[21,170]
 
 
-                def p_single1(cos_theta, g_forward1, g_back1, f1):
-                    term1 = (f1 * (1-g_forward1**2)
-                                /sqrt((1+g_forward1**2+2*g_forward1*cos_theta)**3) 
-                                #second term of TTHG: backward scattering
-                                +(1-f1)*(1-g_back1**2)
-                                /sqrt((1+g_back1**2+2*g_back1*cos_theta)**3))
-                    return term1
+                # def p_single1(cos_theta, g_forward1, g_back1, f1):
+                #     term1 = (f1 * (1-g_forward1**2)
+                #                 /sqrt((1+g_forward1**2+2*g_forward1*cos_theta)**3) 
+                #                 #second term of TTHG: backward scattering
+                #                 +(1-f1)*(1-g_back1**2)
+                #                 /sqrt((1+g_back1**2+2*g_back1*cos_theta)**3))
+                #     return term1
                 
-                cos_theta_values = np.linspace(-1,1,100)
+                # cos_theta_values = np.linspace(-1,1,100)
 
-                p_single_values = p_single1(cos_theta_values, g_forward1, g_back1, f1)
+                # p_single_values = p_single1(cos_theta_values, g_forward1, g_back1, f1)
 
                 # plt.plot(cos_theta_values, p_single_values)
                 # plt.xlabel('cos(theta)')
@@ -974,13 +974,13 @@ def get_reflected_3d(nlevel, wno,nwno, numg,numt, dtau_3d, tau_3d, w0_3d, cosb_3
                 p_single = SmallKCl_405nm_Full_Spline(-cos_theta)
                 #p_single = SmallKCl_405nm_Full_Final(cos_theta)
 
-                def p_single1(cos_theta):
-                    term1 = SmallKCl_405nm_Full_Spline(-cos_theta)
-                    return term1
+                # def p_single1(cos_theta):
+                #     term1 = SmallKCl_405nm_Full_Spline(-cos_theta)
+                #     return term1
                 
-                cos_theta_values = np.linspace(-1,1,100)
+                # cos_theta_values = np.linspace(-1,1,100)
 
-                p_single_values = p_single1(cos_theta_values)
+                # p_single_values = p_single1(cos_theta_values)
 
             elif single_phase==5: # 'LAB_405nm_Medium':
                 p_single = MediumKCl_405nm_Full_Spline(-cos_theta)
@@ -993,13 +993,13 @@ def get_reflected_3d(nlevel, wno,nwno, numg,numt, dtau_3d, tau_3d, w0_3d, cosb_3
                 p_single = SmallKCl_532nm_Full_Spline(-cos_theta)
                 #p_single = SmallKCl_532nm_Full_Final(cos_theta)
 
-                def p_single1(cos_theta):
-                    term1 = SmallKCl_532nm_Full_Spline(-cos_theta)
-                    return term1
+                # def p_single1(cos_theta):
+                #     term1 = SmallKCl_532nm_Full_Spline(-cos_theta)
+                #     return term1
                 
-                cos_theta_values = np.linspace(-1,1,100)
+                # cos_theta_values = np.linspace(-1,1,100)
 
-                p_single_values = p_single1(cos_theta_values)
+                # p_single_values = p_single1(cos_theta_values)
 
             elif single_phase==8: # 'LAB_532nm_Medium':
                 p_single = MediumKCl_532nm_Full_Spline(-cos_theta)
@@ -1031,13 +1031,13 @@ def get_reflected_3d(nlevel, wno,nwno, numg,numt, dtau_3d, tau_3d, w0_3d, cosb_3
                 p_single = Mie_SmallKCl_532nm_Full_Spline(-cos_theta)
                 #p_single = SmallKCl_532nm_Full_Final(cos_theta)
 
-                def p_single1(cos_theta):
-                    term1 = Mie_SmallKCl_532nm_Full_Spline(-cos_theta)
-                    return term1
+                # def p_single1(cos_theta):
+                #     term1 = Mie_SmallKCl_532nm_Full_Spline(-cos_theta)
+                #     return term1
                 
-                cos_theta_values = np.linspace(-1,1,100)
+                # cos_theta_values = np.linspace(-1,1,100)
 
-                p_single_values = p_single1(cos_theta_values)
+                # p_single_values = p_single1(cos_theta_values)
 
             elif single_phase==14: # 'MIE_532nm_Medium':
                 p_single = Mie_MediumKCl_532nm_Full_Spline(-cos_theta)
@@ -1093,16 +1093,16 @@ def get_reflected_3d(nlevel, wno,nwno, numg,numt, dtau_3d, tau_3d, w0_3d, cosb_3
     # ax.set_ylabel('Single scattering intensity')
     # ax.set_title('PICASO Phase Fcns')
             
-    plt.plot(cos_theta_values, p_single_values)
-    plt.xlabel('cos(theta)')
-    plt.ylabel('p_single')
-    plt.title('TTHG Phase Fcn @ ~1mbar ')
-    plt.yscale('log')
-    plt.grid(True)
-    plt.show()
+    # plt.plot(cos_theta_values, p_single_values)
+    # plt.xlabel('cos(theta)')
+    # plt.ylabel('p_single')
+    # plt.title('TTHG Phase Fcn @ ~1mbar ')
+    # plt.yscale('log')
+    # plt.grid(True)
+    # plt.show()
 
-    area = np.trapz(p_single_values, cos_theta_values)
-    print("area =", area)
+    # area = np.trapz(p_single_values, cos_theta_values)
+    # print("area =", area)
 
     return xint_at_top, p_single
 
