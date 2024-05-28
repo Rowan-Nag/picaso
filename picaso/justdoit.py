@@ -4705,7 +4705,9 @@ def brown_dwarf_cld():
 def single_phase_options(printout=True):
     """Retrieve all the options for direct radation"""
     if printout: print("Can also set functional form of forward/back scattering in approx['TTHG_params']")
-    return ['cahoy','OTHG','TTHG','TTHG_ray','LAB_405nm_Small','LAB_405nm_Medium','LAB_405nm_Large','LAB_532nm_Small','LAB_532nm_Medium','LAB_532nm_Large', 'MIE_405nm_Small','MIE_405nm_Medium','MIE_405nm_Large','MIE_532nm_Small','MIE_532nm_Medium','MIE_532nm_Large', 'TTHG_405nm_Small','TTHG_405nm_Medium','TTHG_405nm_Large','TTHG_532nm_Small','TTHG_532nm_Medium','TTHG_532nm_Large']
+    return ['cahoy','OTHG','TTHG','TTHG_ray','LAB_405nm_Small','LAB_405nm_Medium','LAB_405nm_Large','LAB_532nm_Small','LAB_532nm_Medium','LAB_532nm_Large', 'MIE_405nm_Small','MIE_405nm_Medium','MIE_405nm_Large','MIE_532nm_Small','MIE_532nm_Medium','MIE_532nm_Large',
+            'TTHG_405nm_Small','TTHG_405nm_Medium','TTHG_405nm_Large','TTHG_532nm_Small','TTHG_532nm_Medium','TTHG_532nm_Large'
+            'DDA_405nm_Small_Cube','DDA_532nm_Small_Cube','DDA_532nm_Medium_Cuboid','DDA_532nm_Medium_IrregCuboid','DDA_532nm_Large_Cuboid','DDA_532nm_Large_IrregCuboid']
 def multi_phase_options(printout=True):
     """Retrieve all the options for multiple scattering radiation"""
     if printout: print("Can also set delta_eddington=True/False in approx['delta_eddington']")
