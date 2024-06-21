@@ -403,13 +403,21 @@ def picaso(bundle,opacityclass, dimension = '1d',calculation='reflected', full_o
             #p_single_array = picaso(returns, p_single_array)
             for ig in range(ngauss): # correlated - loop (which is different from gauss-tchevychev angle)
                 #use toon method (and tridiagonal matrix solver) to get net cumulative fluxes 
+                if (single_phase==4): # 'LAB' | This is used for inserting lab single-scattering data from a notebook.
+                    print('WARN: using user-provided p_single value.')
+                    try:
+                        p_single_func = inputs['approx']['rt_params']['toon']['p_single_func']
+                    except:
+                        raise Exception("user-provided p-single value is not defined. Must add it to the inputs object with ...approx(single_phase='LAB', p_single=....)")
+                
                 xint, p_single_output  = get_reflected_3d(nlevel, wno,nwno,ng,nt,
                                                 DTAU_3d[:,:,:,:,ig], TAU_3d[:,:,:,:,ig], W0_3d[:,:,:,:,ig], COSB_3d[:,:,:,:,ig],GCOS2_3d[:,:,:,:,ig],
                                                 FTAU_CLD_3d[:,:,:,:,ig],FTAU_RAY_3d[:,:,:,:,ig],
                                                 DTAU_OG_3d[:,:,:,:,ig], TAU_OG_3d[:,:,:,:,ig], W0_OG_3d[:,:,:,:,ig], COSB_OG_3d[:,:,:,:,ig],
                                                 atm.surf_reflect, ubar0,ubar1,cos_theta, F0PI,
                                                 single_phase,multi_phase,
-                                                frac_a,frac_b,frac_c,constant_back,constant_forward, tridiagonal)#, p_single)#[0]#, LargeKCl_405nm_Full_Spline) # The [0] returns the first value only!
+                                                frac_a,frac_b,frac_c,constant_back,constant_forward, tridiagonal, p_single_func)#[0]#, LargeKCl_405nm_Full_Spline) # The [0] returns the first value only!
+
                 # uncomment the [0] in the line above to get first value only (onl needed for lab data testing)
                 xint_at_top += xint*gauss_wts[ig]
                 #print("xint", xint)
@@ -3750,7 +3758,9 @@ class inputs():
         p_reference=1, rt_method='toon', stream=2, toon_coefficients="quadrature",
         single_form='explicit', calculate_fluxes='off', query='nearest_neighbor',
         w_single_form='TTHG', w_multi_form='TTHG', psingle_form='TTHG', 
-        w_single_rayleigh = 'on', w_multi_rayleigh='on', psingle_rayleigh='on'):
+        w_single_rayleigh = 'on', w_multi_rayleigh='on', psingle_rayleigh='on'
+        , p_single_func = None
+        ):
         """
         This function REsets all the default approximations in the code from what is in config file.
         This means that it will rewrite what is specified via config file defaults.
@@ -3807,6 +3817,9 @@ class inputs():
             Toggle rayleigh scattering on/off for multi scattering in SH
         psingle_rayleigh : str 
             Toggle rayleigh scattering on/off for psingle in SH
+        p_single_func : Callable
+            single-scattering values from simulations or experiment. Added for Cloud lab.
+            Must also use single_phase = 'LAB'.
         """
         self.inputs['approx']['rt_method'] = rt_method
 
@@ -3834,7 +3847,7 @@ class inputs():
         self.inputs['approx']['rt_params']['toon']['toon_coefficients'] = toon_phase_coefficients(printout=False).index(toon_coefficients)
         self.inputs['approx']['rt_params']['toon']['multi_phase'] = multi_phase_options(printout=False).index(multi_phase)
         self.inputs['approx']['rt_params']['toon']['single_phase'] = single_phase_options(printout=False).index(single_phase)
-        
+        self.inputs['approx']['rt_params']['toon']['p_single_func'] = p_single_func
         #unique to SH
         self.inputs['approx']['rt_params']['SH']['single_form'] = SH_psingle_form_options(printout=False).index(single_form)
         self.inputs['approx']['rt_params']['SH']['w_single_form'] = SH_scattering_options(printout=False).index(w_single_form)
@@ -4703,9 +4716,10 @@ def brown_dwarf_cld():
 def single_phase_options(printout=True):
     """Retrieve all the options for direct radation"""
     if printout: print("Can also set functional form of forward/back scattering in approx['TTHG_params']")
-    return ['cahoy','OTHG','TTHG','TTHG_ray','LAB_405nm_Small','LAB_405nm_Medium','LAB_405nm_Large','LAB_532nm_Small','LAB_532nm_Medium','LAB_532nm_Large', 'MIE_405nm_Small','MIE_405nm_Medium','MIE_405nm_Large','MIE_532nm_Small','MIE_532nm_Medium','MIE_532nm_Large',
-            'TTHG_405nm_Small','TTHG_405nm_Medium','TTHG_405nm_Large','TTHG_532nm_Small','TTHG_532nm_Medium','TTHG_532nm_Large'
-            'DDA_405nm_Small_Cube','DDA_532nm_Small_Cube','DDA_532nm_Medium_Cuboid','DDA_532nm_Medium_IrregCuboid','DDA_532nm_Large_Cuboid','DDA_532nm_Large_IrregCuboid']
+    return ['cahoy','OTHG','TTHG','TTHG_ray', 'LAB' ]
+    # 'LAB_405nm_Small','LAB_405nm_Medium','LAB_405nm_Large','LAB_532nm_Small','LAB_532nm_Medium','LAB_532nm_Large', 'MIE_405nm_Small','MIE_405nm_Medium','MIE_405nm_Large','MIE_532nm_Small','MIE_532nm_Medium','MIE_532nm_Large',
+    #         'TTHG_405nm_Small','TTHG_405nm_Medium','TTHG_405nm_Large','TTHG_532nm_Small','TTHG_532nm_Medium','TTHG_532nm_Large'
+    #         'DDA_405nm_Small_Cube','DDA_532nm_Small_Cube','DDA_532nm_Medium_Cuboid','DDA_532nm_Medium_IrregCuboid','DDA_532nm_Large_Cuboid','DDA_532nm_Large_IrregCuboid']
 def multi_phase_options(printout=True):
     """Retrieve all the options for multiple scattering radiation"""
     if printout: print("Can also set delta_eddington=True/False in approx['delta_eddington']")

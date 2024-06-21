@@ -620,7 +620,7 @@ def raman_pollack(nlayer,wave):
     qv = facv / SHIFT( WAVEL, -SHIFTV0 ) ** 4 * ( 3. * alpha_p2 + 2./3. * gamma_p2 )    
     """
     dat = pd.read_csv(os.path.join(os.environ.get('picaso_refdata'), 'opacities','raman_fortran.txt'),
-                        delim_whitespace=True, header=None, names = ['w','f'])
+                        sep="\s+", header=None, names = ['w','f'])
     #fill in matrix to match real raman format
     interp_raman = np.interp(wave, dat['w'].values, dat['f'].values, )
     raman_factor = np.zeros((nlayer, len(wave)))
