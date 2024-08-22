@@ -133,7 +133,7 @@ print("532nm Small KCl LAB g = ",SmallKCl_532nm_g)
 #### MIE Files ####
 
 #Small 405 nm MIE
-Mie_SmallKCl_405nm = pd.read_csv("./Mie_data/MiePlot_SmallKCl_405nm.txt",header=[0,1])
+Mie_SmallKCl_405nm = pd.read_csv("./Mie_data/MiePlot_SmallKCl_405nm_BAD.txt",header=[0,1])
 Mie_SmallKCl_405nm_Array = Mie_SmallKCl_405nm.to_numpy() #convert to numpy array
 Mie_SmallKCl_405nm_cosd = Mie_SmallKCl_405nm_Array[:,2] #extract 3rd column (cos(theta))
 Mie_SmallKCl_405nm_Intensity = Mie_SmallKCl_405nm_Array[:,1] #extract 2nd column (normalized intensity)
@@ -152,7 +152,7 @@ Mie_SmallKCl_405nm_g = Mie_SmallKCl_405nm_g_Num / Mie_SmallKCl_405nm_g_Denom
 print("405nm Small KCl MIE g = ",Mie_SmallKCl_405nm_g)
 
 #Medium 405 nm MIE
-Mie_MediumKCl_405nm = pd.read_csv("./Mie_data/MiePlot_MediumKCl_405nm.txt",header=[0,1])
+Mie_MediumKCl_405nm = pd.read_csv("./Mie_data/MiePlot_MediumKCl_405nm_BAD.txt",header=[0,1])
 Mie_MediumKCl_405nm_Array = Mie_MediumKCl_405nm.to_numpy() #convert to numpy array
 Mie_MediumKCl_405nm_cosd = Mie_MediumKCl_405nm_Array[:,2] #extract 3rd column (cos(theta))
 Mie_MediumKCl_405nm_Intensity = Mie_MediumKCl_405nm_Array[:,1] #extract 2nd column (normalized intensity)
@@ -171,7 +171,7 @@ Mie_MediumKCl_405nm_g = Mie_MediumKCl_405nm_g_Num / Mie_MediumKCl_405nm_g_Denom
 print("405nm Medium KCl MIE g = ",Mie_MediumKCl_405nm_g)
 
 #Large 405 nm MIE
-Mie_LargeKCl_405nm = pd.read_csv("./Mie_data/MiePlot_LargeKCl_405nm.txt",header=[0,1])
+Mie_LargeKCl_405nm = pd.read_csv("./Mie_data/MiePlot_LargeKCl_405nm_BAD.txt",header=[0,1])
 Mie_LargeKCl_405nm_Array = Mie_LargeKCl_405nm.to_numpy() #convert to numpy array
 Mie_LargeKCl_405nm_cosd = Mie_LargeKCl_405nm_Array[:,2] #extract 3rd column (cos(theta))
 Mie_LargeKCl_405nm_Intensity = Mie_LargeKCl_405nm_Array[:,1] #extract 2nd column (normalized intensity)
@@ -190,7 +190,7 @@ Mie_LargeKCl_405nm_g = Mie_LargeKCl_405nm_g_Num / Mie_LargeKCl_405nm_g_Denom
 print("405nm Large KCl MIE g = ",Mie_LargeKCl_405nm_g)
 
 #Small 532 nm MIE
-Mie_SmallKCl_532nm = pd.read_csv("./Mie_data/MiePlot_SmallKCl_532nm.txt",header=[0,1])
+Mie_SmallKCl_532nm = pd.read_csv("./Mie_data/Mie_SmallKCl_532nm_072524.txt",header=[0,1])
 Mie_SmallKCl_532nm_Array = Mie_SmallKCl_532nm.to_numpy() #convert to numpy array
 Mie_SmallKCl_532nm_cosd = Mie_SmallKCl_532nm_Array[:,2] #extract 3rd column (cos(theta))
 Mie_SmallKCl_532nm_Intensity = Mie_SmallKCl_532nm_Array[:,1] #extract 2nd column (normalized intensity)
@@ -209,7 +209,7 @@ Mie_SmallKCl_532nm_g = Mie_SmallKCl_532nm_g_Num / Mie_SmallKCl_532nm_g_Denom
 print("532nm Small KCl MIE g = ",Mie_SmallKCl_532nm_g)
 
 #Meidum 532 nm MIE
-Mie_MediumKCl_532nm = pd.read_csv("./Mie_data/MiePlot_MediumKCl_532nm.txt",header=[0,1])
+Mie_MediumKCl_532nm = pd.read_csv("./Mie_data/Mie_MediumKCl_532nm_072524.txt",header=[0,1])
 Mie_MediumKCl_532nm_Array = Mie_MediumKCl_532nm.to_numpy() #convert to numpy array
 Mie_MediumKCl_532nm_cosd = Mie_MediumKCl_532nm_Array[:,2] #extract 3rd column (cos(theta))
 Mie_MediumKCl_532nm_Intensity = Mie_MediumKCl_532nm_Array[:,1] #extract 2nd column (normalized intensity)
@@ -228,7 +228,7 @@ Mie_MediumKCl_532nm_g = Mie_MediumKCl_532nm_g_Num / Mie_MediumKCl_532nm_g_Denom
 print("532nm Medium KCl MIE g = ",Mie_MediumKCl_532nm_g)
 
 #Large 532 nm MIE
-Mie_LargeKCl_532nm = pd.read_csv("./Mie_data/MiePlot_LargeKCl_532nm.txt",header=[0,1])
+Mie_LargeKCl_532nm = pd.read_csv("./Mie_data/Mie_LargeKCl_532nm_072524.txt",header=[0,1])
 Mie_LargeKCl_532nm_Array = Mie_LargeKCl_532nm.to_numpy() #convert to numpy array
 Mie_LargeKCl_532nm_cosd = Mie_LargeKCl_532nm_Array[:,2] #extract 3rd column (cos(theta))
 Mie_LargeKCl_532nm_Intensity = Mie_LargeKCl_532nm_Array[:,1] #extract 2nd column (normalized intensity)
