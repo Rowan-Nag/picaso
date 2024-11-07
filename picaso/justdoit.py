@@ -3169,12 +3169,12 @@ class inputs():
                     elif new_lon_og[-1] < -77 and new_lon_og[0] < 0: # third quarter of phases
                         new_lon_transfer = new_lon_og[-1] + new_lon_og[0]
                         new_lon = new_lon_og - new_lon_transfer + micro_shift #new_lon_transfer here is negative, so we are adding
-                        shift_back = -new_lon_transfer + micro_shift #- 180
+                        shift_back = -new_lon_transfer + micro_shift - 180
                     elif new_lon_og[-1] < -77 and new_lon_og[0] > 0: #last quarter of phases 
                         new_lon_transfer = abs(new_lon_og[-1]) - abs(new_lon_og[0]) # take the difference between the first lon and the last lon at each phase
                         new_lon = new_lon_og + new_lon_transfer + micro_shift # The 'transfer' will then shift each phase to the opposite side of the dayside hemisphere. This is crucial for weighting ng and nt correctly for spectrum.
                         #add total shift statement
-                        shift_back = new_lon_transfer + micro_shift #- 180
+                        shift_back = new_lon_transfer + micro_shift - 180
 
                 if 'new_lon' in locals():
                     # variable exists
@@ -4704,7 +4704,7 @@ def single_phase_options(printout=True):
     """Retrieve all the options for direct radation"""
     if printout: print("Can also set functional form of forward/back scattering in approx['TTHG_params']")
     return ['cahoy','OTHG','TTHG','TTHG_ray','LAB_405nm_Small','LAB_405nm_Medium','LAB_405nm_Large','LAB_532nm_Small','LAB_532nm_Medium','LAB_532nm_Large', 'MIE_405nm_Small','MIE_405nm_Medium','MIE_405nm_Large','MIE_532nm_Small','MIE_532nm_Medium','MIE_532nm_Large',
-            'TTHG_405nm_Small','TTHG_405nm_Medium','TTHG_405nm_Large','TTHG_532nm_Small','TTHG_532nm_Medium','TTHG_532nm_Large'
+            'TTHG_405nm_Small','TTHG_405nm_Medium','TTHG_405nm_Large','TTHG_532nm_Small','TTHG_532nm_Medium','TTHG_532nm_Large',
             'DDA_405nm_Small_Cube','DDA_532nm_Small_Cube','DDA_532nm_Medium_Cuboid','DDA_532nm_Medium_IrregCuboid','DDA_532nm_Large_Cuboid','DDA_532nm_Large_IrregCuboid']
 def multi_phase_options(printout=True):
     """Retrieve all the options for multiple scattering radiation"""
