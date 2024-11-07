@@ -198,6 +198,10 @@ Mie_SmallKCl_532nm_cosd_flip = np.flip(Mie_SmallKCl_532nm_cosd)  # Reverse these
 Mie_SmallKCl_532nm_Intensity_flip = np.flip(Mie_SmallKCl_532nm_Intensity)
 Mie_SmallKCl_532nm_Integral = np.trapz(Mie_SmallKCl_532nm_Intensity_flip, Mie_SmallKCl_532nm_cosd_flip)
 Mie_SmallKCl_532nm_Normalized2 = 2 * Mie_SmallKCl_532nm_Intensity_flip /Mie_SmallKCl_532nm_Integral
+Mie_SmallKCl_532nm_Normalized2_flip = np.flip(Mie_SmallKCl_532nm_Normalized2)
+#print("Normalized Fcn", Mie_SmallKCl_532nm_Normalized2)
+area_Small = np.trapz(Mie_SmallKCl_532nm_Normalized2, Mie_SmallKCl_532nm_cosd_flip)
+#print("Area under curve:", area_Small)
 Mie_SmallKCl_532nm_Full_Spline = CubicSpline(Mie_SmallKCl_532nm_cosd_flip, Mie_SmallKCl_532nm_Normalized2)
 # This spline is what we will be using hence forth. It describes (extrapolated; 0-180 deg) lab data using a series of piecewise polynomials in order to create a continuous set of functions wrt cos_theta
 #Mie_SmallKCl_532nm_Full_Spline = CubicSpline(Mie_SmallKCl_532nm_cosd_flip, Mie_SmallKCl_532nm_Intensity_flip)
@@ -208,11 +212,30 @@ Mie_SmallKCl_532nm_g_Denom = np.trapz(Mie_SmallKCl_532nm_Intensity_flip, Mie_Sma
 Mie_SmallKCl_532nm_g = Mie_SmallKCl_532nm_g_Num / Mie_SmallKCl_532nm_g_Denom
 print("532nm Small KCl MIE g = ",Mie_SmallKCl_532nm_g)
 theta = np.arccos(Mie_SmallKCl_532nm_cosd_flip)
-Mie_SmallKCl_532nm_g_Num_NEW = np.trapz(Mie_SmallKCl_532nm_Intensity_flip * np.cos(theta) * np.sin(theta),Mie_SmallKCl_532nm_cosd_flip)
-Mie_SmallKCl_532nm_g_Denom_NEW = np.trapz(Mie_SmallKCl_532nm_Intensity_flip * np.sin(theta),Mie_SmallKCl_532nm_cosd_flip)
-Mie_SmallKCl_532nm_g_NEW = Mie_SmallKCl_532nm_g_Num_NEW / Mie_SmallKCl_532nm_g_Denom_NEW
+# Mie_SmallKCl_532nm_g_Num_NEW = np.trapz(Mie_SmallKCl_532nm_Intensity_flip * np.cos(theta) * np.sin(theta),Mie_SmallKCl_532nm_cosd_flip)
+# Mie_SmallKCl_532nm_g_Denom_NEW = np.trapz(Mie_SmallKCl_532nm_Intensity_flip * np.sin(theta),Mie_SmallKCl_532nm_cosd_flip)
+# Mie_SmallKCl_532nm_g_NEW = Mie_SmallKCl_532nm_g_Num_NEW / Mie_SmallKCl_532nm_g_Denom_NEW
+# print("NEW 532nm Small KCl MIE g =:", Mie_SmallKCl_532nm_g_NEW)
+# print("NEW 532nm Small KCl MIE g NUM =:", Mie_SmallKCl_532nm_g_Num_NEW)
+# print("NEW 532nm Small KCl MIE g DENOM =:", Mie_SmallKCl_532nm_g_Denom_NEW)
+theta = np.arccos(Mie_SmallKCl_532nm_cosd_flip)
+theta_flip = np.flip(theta)
+#print("Theta:", theta)
+#print("cosd_flip:", Mie_SmallKCl_532nm_cosd_flip)
+Mie_SmallKCl_532nm_g_Num_NEW = np.trapz(Mie_SmallKCl_532nm_Normalized2_flip * np.cos(theta_flip) * np.sin(theta_flip),theta_flip)
+Mie_SmallKCl_532nm_g_NEW = Mie_SmallKCl_532nm_g_Num_NEW / 2
 print("NEW 532nm Small KCl MIE g =:", Mie_SmallKCl_532nm_g_NEW)
 print("NEW 532nm Small KCl MIE g NUM =:", Mie_SmallKCl_532nm_g_Num_NEW)
+
+# fig, ax = plt.subplots()
+# ax.plot(theta_flip, Mie_SmallKCl_532nm_Normalized2_flip)
+# ax.set_xlabel('Theta')
+# ax.set_ylabel('p_single (intensity)')
+# ax.set_title('PICASO Phase Fcns')
+# ax.set_yscale('log')
+# #ax.set_xlim([0, 180])
+# ax.set_ylim([3e-2, 500])
+# plt.show()
 
 #Meidum 532 nm MIE
 Mie_MediumKCl_532nm = pd.read_csv("./Mie_data/Mie_MediumKCl_532nm_072524.txt",header=[0,1])
@@ -223,6 +246,9 @@ Mie_MediumKCl_532nm_cosd_flip = np.flip(Mie_MediumKCl_532nm_cosd)  # Reverse the
 Mie_MediumKCl_532nm_Intensity_flip = np.flip(Mie_MediumKCl_532nm_Intensity)
 Mie_MediumKCl_532nm_Integral = np.trapz(Mie_MediumKCl_532nm_Intensity_flip, Mie_MediumKCl_532nm_cosd_flip)
 Mie_MediumKCl_532nm_Normalized2 = 2 * Mie_MediumKCl_532nm_Intensity_flip /Mie_MediumKCl_532nm_Integral
+Mie_MediumKCl_532nm_Normalized2_flip = np.flip(Mie_MediumKCl_532nm_Normalized2)
+area_Medium = np.trapz(Mie_MediumKCl_532nm_Normalized2, Mie_MediumKCl_532nm_cosd_flip)
+print("Area under curve:", area_Medium)
 Mie_MediumKCl_532nm_Full_Spline = CubicSpline(Mie_MediumKCl_532nm_cosd_flip, Mie_MediumKCl_532nm_Normalized2)
 # This spline is what we will be using hence forth. It describes (extrapolated; 0-180 deg) lab data using a series of piecewise polynomials in order to create a continuous set of functions wrt cos_theta
 #Mie_MediumKCl_532nm_Full_Spline = CubicSpline(Mie_MediumKCl_532nm_cosd_flip, Mie_MediumKCl_532nm_Intensity_flip)
@@ -232,10 +258,17 @@ Mie_MediumKCl_532nm_g_Num = np.trapz((Mie_MediumKCl_532nm_cosd_flip * Mie_Medium
 Mie_MediumKCl_532nm_g_Denom = np.trapz(Mie_MediumKCl_532nm_Intensity_flip, Mie_MediumKCl_532nm_cosd_flip)
 Mie_MediumKCl_532nm_g = Mie_MediumKCl_532nm_g_Num / Mie_MediumKCl_532nm_g_Denom
 print("532nm Medium KCl MIE g = ",Mie_MediumKCl_532nm_g)
+# theta = np.arccos(Mie_MediumKCl_532nm_cosd_flip)
+# Mie_MediumKCl_532nm_g_Num_NEW = np.trapz(Mie_MediumKCl_532nm_Intensity_flip * np.cos(theta) * np.sin(theta),Mie_MediumKCl_532nm_cosd_flip)
+# Mie_MediumKCl_532nm_g_Denom_NEW = np.trapz(Mie_MediumKCl_532nm_Intensity_flip * np.sin(theta),Mie_MediumKCl_532nm_cosd_flip)
+# Mie_MediumKCl_532nm_g_NEW = Mie_MediumKCl_532nm_g_Num_NEW / Mie_MediumKCl_532nm_g_Denom_NEW
+# print("NEW 532nm Medium KCl MIE g =:", Mie_MediumKCl_532nm_g_NEW)
+# print("NEW 532nm Medium KCl MIE g NUM =:", Mie_MediumKCl_532nm_g_Num_NEW)
+# print("NEW 532nm Medium KCl MIE g DENOM =:", Mie_MediumKCl_532nm_g_Denom_NEW)
 theta = np.arccos(Mie_MediumKCl_532nm_cosd_flip)
-Mie_MediumKCl_532nm_g_Num_NEW = np.trapz(Mie_MediumKCl_532nm_Intensity_flip * np.cos(theta) * np.sin(theta),Mie_MediumKCl_532nm_cosd_flip)
-Mie_MediumKCl_532nm_g_Denom_NEW = np.trapz(Mie_MediumKCl_532nm_Intensity_flip * np.sin(theta),Mie_MediumKCl_532nm_cosd_flip)
-Mie_MediumKCl_532nm_g_NEW = Mie_MediumKCl_532nm_g_Num_NEW / Mie_MediumKCl_532nm_g_Denom_NEW
+theta_flip = np.flip(theta)
+Mie_MediumKCl_532nm_g_Num_NEW = np.trapz(Mie_MediumKCl_532nm_Normalized2_flip * np.cos(theta_flip) * np.sin(theta_flip),theta_flip)
+Mie_MediumKCl_532nm_g_NEW = Mie_MediumKCl_532nm_g_Num_NEW / 2
 print("NEW 532nm Medium KCl MIE g =:", Mie_MediumKCl_532nm_g_NEW)
 print("NEW 532nm Medium KCl MIE g NUM =:", Mie_MediumKCl_532nm_g_Num_NEW)
 
@@ -248,6 +281,9 @@ Mie_LargeKCl_532nm_cosd_flip = np.flip(Mie_LargeKCl_532nm_cosd)  # Reverse these
 Mie_LargeKCl_532nm_Intensity_flip = np.flip(Mie_LargeKCl_532nm_Intensity)
 Mie_LargeKCl_532nm_Integral = np.trapz(Mie_LargeKCl_532nm_Intensity_flip, Mie_LargeKCl_532nm_cosd_flip)
 Mie_LargeKCl_532nm_Normalized2 = 2 * Mie_LargeKCl_532nm_Intensity_flip /Mie_LargeKCl_532nm_Integral
+Mie_LargeKCl_532nm_Normalized2_flip = np.flip(Mie_LargeKCl_532nm_Normalized2)
+area_Large = np.trapz(Mie_LargeKCl_532nm_Normalized2, Mie_LargeKCl_532nm_cosd_flip)
+print("Area under curve:", area_Large)
 Mie_LargeKCl_532nm_Full_Spline = CubicSpline(Mie_LargeKCl_532nm_cosd_flip, Mie_LargeKCl_532nm_Normalized2)
 # This spline is what we will be using hence forth. It describes (extrapolated; 0-180 deg) lab data using a series of piecewise polynomials in order to create a continuous set of functions wrt cos_theta
 #Mie_LargeKCl_532nm_Full_Spline = CubicSpline(Mie_LargeKCl_532nm_cosd_flip, Mie_LargeKCl_532nm_Intensity_flip)
@@ -257,10 +293,17 @@ Mie_LargeKCl_532nm_g_Num = np.trapz((Mie_LargeKCl_532nm_cosd_flip * Mie_LargeKCl
 Mie_LargeKCl_532nm_g_Denom = np.trapz(Mie_LargeKCl_532nm_Intensity_flip, Mie_LargeKCl_532nm_cosd_flip)
 Mie_LargeKCl_532nm_g = Mie_LargeKCl_532nm_g_Num / Mie_LargeKCl_532nm_g_Denom
 print("532nm Large KCl MIE g = ",Mie_LargeKCl_532nm_g)
+# theta = np.arccos(Mie_LargeKCl_532nm_cosd_flip)
+# Mie_LargeKCl_532nm_g_Num_NEW = np.trapz(Mie_LargeKCl_532nm_Intensity_flip * np.cos(theta) * np.sin(theta),Mie_LargeKCl_532nm_cosd_flip)
+# Mie_LargeKCl_532nm_g_Denom_NEW = np.trapz(Mie_LargeKCl_532nm_Intensity_flip * np.sin(theta),Mie_LargeKCl_532nm_cosd_flip)
+# Mie_LargeKCl_532nm_g_NEW = Mie_LargeKCl_532nm_g_Num_NEW / Mie_LargeKCl_532nm_g_Denom_NEW
+# print("NEW 532nm Large KCl MIE g =:", Mie_LargeKCl_532nm_g_NEW)
+# print("NEW 532nm Large KCl MIE g NUM =:", Mie_LargeKCl_532nm_g_Num_NEW)
+# print("NEW 532nm Large KCl MIE g DENOM =:", Mie_LargeKCl_532nm_g_Denom_NEW)
 theta = np.arccos(Mie_LargeKCl_532nm_cosd_flip)
-Mie_LargeKCl_532nm_g_Num_NEW = np.trapz(Mie_LargeKCl_532nm_Intensity_flip * np.cos(theta) * np.sin(theta),Mie_LargeKCl_532nm_cosd_flip)
-Mie_LargeKCl_532nm_g_Denom_NEW = np.trapz(Mie_LargeKCl_532nm_Intensity_flip * np.sin(theta),Mie_LargeKCl_532nm_cosd_flip)
-Mie_LargeKCl_532nm_g_NEW = Mie_LargeKCl_532nm_g_Num_NEW / Mie_LargeKCl_532nm_g_Denom_NEW
+theta_flip = np.flip(theta)
+Mie_LargeKCl_532nm_g_Num_NEW = np.trapz(Mie_LargeKCl_532nm_Normalized2_flip * np.cos(theta_flip) * np.sin(theta_flip),theta_flip)
+Mie_LargeKCl_532nm_g_NEW = Mie_LargeKCl_532nm_g_Num_NEW / 2
 print("NEW 532nm Large KCl MIE g =:", Mie_LargeKCl_532nm_g_NEW)
 print("NEW 532nm Large KCl MIE g NUM =:", Mie_LargeKCl_532nm_g_Num_NEW)
 
