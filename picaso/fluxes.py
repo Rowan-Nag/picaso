@@ -201,7 +201,7 @@ Mie_SmallKCl_532nm_Normalized2 = 2 * Mie_SmallKCl_532nm_Intensity_flip /Mie_Smal
 Mie_SmallKCl_532nm_Normalized2_flip = np.flip(Mie_SmallKCl_532nm_Normalized2)
 #print("Normalized Fcn", Mie_SmallKCl_532nm_Normalized2)
 area_Small = np.trapz(Mie_SmallKCl_532nm_Normalized2, Mie_SmallKCl_532nm_cosd_flip)
-#print("Area under curve:", area_Small)
+print("Area under curve:", area_Small)
 Mie_SmallKCl_532nm_Full_Spline = CubicSpline(Mie_SmallKCl_532nm_cosd_flip, Mie_SmallKCl_532nm_Normalized2)
 # This spline is what we will be using hence forth. It describes (extrapolated; 0-180 deg) lab data using a series of piecewise polynomials in order to create a continuous set of functions wrt cos_theta
 #Mie_SmallKCl_532nm_Full_Spline = CubicSpline(Mie_SmallKCl_532nm_cosd_flip, Mie_SmallKCl_532nm_Intensity_flip)
@@ -1335,7 +1335,7 @@ def get_reflected_3d(nlevel, wno,nwno, numg,numt, dtau_3d, tau_3d, w0_3d, cosb_3
                                 +(1-f0)*(1-gb**2)
                                 /sqrt((1+gb**2+2*gb*cos_theta)**3))
             elif single_phase==19:#'TTHG_532nm_Small':
-                gf = Mie_SmallKCl_532nm_g
+                gf = Mie_SmallKCl_532nm_g_NEW
                 gb = - gf / 2
                 f0 = 1 - gb**2
                 p_single=(f0 * (1-gf**2)
@@ -1344,7 +1344,7 @@ def get_reflected_3d(nlevel, wno,nwno, numg,numt, dtau_3d, tau_3d, w0_3d, cosb_3
                                 +(1-f0)*(1-gb**2)
                                 /sqrt((1+gb**2+2*gb*cos_theta)**3))
             elif single_phase==20:#'TTHG_532nm_Medium':
-                gf = Mie_MediumKCl_532nm_g
+                gf = Mie_MediumKCl_532nm_g_NEW
                 gb = - gf / 2
                 f0 = 1 - gb**2
                 p_single=(f0 * (1-gf**2)
@@ -1353,7 +1353,7 @@ def get_reflected_3d(nlevel, wno,nwno, numg,numt, dtau_3d, tau_3d, w0_3d, cosb_3
                                 +(1-f0)*(1-gb**2)
                                 /sqrt((1+gb**2+2*gb*cos_theta)**3))    
             elif single_phase==21:#'TTHG_532nm_Large':
-                gf = Mie_LargeKCl_532nm_g
+                gf = Mie_LargeKCl_532nm_g_NEW
                 gb = - gf / 2
                 f0 = 1 - gb**2
                 p_single=(f0 * (1-gf**2)
