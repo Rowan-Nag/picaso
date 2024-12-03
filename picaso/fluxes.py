@@ -335,7 +335,7 @@ DDA_SmallKCl_405nm_Cube_Normalized2 = 2 * DDA_SmallKCl_405nm_Cube_Intensity_flip
 DDA_SmallKCl_405nm_Cube_Full_Spline = CubicSpline(DDA_SmallKCl_405nm_Cube_cosd_flip, DDA_SmallKCl_405nm_Cube_Normalized2)
 
 # Small 532 nm DDA (CUBE)
-DDA_SmallKCl_532nm_Cube = pd.read_csv("./DDA_data/PF_and_DOLP_small_cubes_KCl_532nm.txt",header=[0])
+DDA_SmallKCl_532nm_Cube = pd.read_csv("./DDA_data/DDA_Data_v2/PF_and_DOLP_small_cubes_KCl_532nm.txt",header=[0])
 DDA_SmallKCl_532nm_Cube_Array = DDA_SmallKCl_532nm_Cube.to_numpy()
 DDA_SmallKCl_532nm_Cube_Rad = DDA_SmallKCl_532nm_Cube_Array[:,0] * np.pi / 180 ## extract first column (degrees), change to radians
 DDA_SmallKCl_532nm_Cube_cosd = np.cos(DDA_SmallKCl_532nm_Cube_Rad) # extract first column (degrees), change to cos
@@ -347,7 +347,7 @@ DDA_SmallKCl_532nm_Cube_Normalized2 = 2 * DDA_SmallKCl_532nm_Cube_Intensity_flip
 DDA_SmallKCl_532nm_Cube_Full_Spline = CubicSpline(DDA_SmallKCl_532nm_Cube_cosd_flip, DDA_SmallKCl_532nm_Cube_Normalized2)
 
 # Medium 532 nm DDA (Cuboid)
-DDA_MediumKCl_532nm_Cuboid = pd.read_csv("./DDA_data/PF_and_DOLP_medium_regular_cuboids_KCl_532nm.txt",header=[0])
+DDA_MediumKCl_532nm_Cuboid = pd.read_csv("./DDA_data/DDA_Data_v2/PF_and_DOLP_medium_regular_cuboids_KCl_532nm.txt",header=[0])
 DDA_MediumKCl_532nm_Cuboid_Array = DDA_MediumKCl_532nm_Cuboid.to_numpy()
 DDA_MediumKCl_532nm_Cuboid_Rad = DDA_MediumKCl_532nm_Cuboid_Array[:,0] * np.pi / 180 ## extract first column (degrees), change to radians
 DDA_MediumKCl_532nm_Cuboid_cosd = np.cos(DDA_MediumKCl_532nm_Cuboid_Rad) # extract first column (degrees), change to cos
@@ -359,7 +359,7 @@ DDA_MediumKCl_532nm_Cuboid_Normalized2 = 2 * DDA_MediumKCl_532nm_Cuboid_Intensit
 DDA_MediumKCl_532nm_Cuboid_Full_Spline = CubicSpline(DDA_MediumKCl_532nm_Cuboid_cosd_flip, DDA_MediumKCl_532nm_Cuboid_Normalized2)
 
 # Medium 532 nm DDA (Medium Irregular)
-DDA_MediumKCl_532nm_IrregCuboid = pd.read_csv("./DDA_data/PF_and_DOLP_medium_irregular_cuboids_medium_KCl_532nm.txt",header=[0])
+DDA_MediumKCl_532nm_IrregCuboid = pd.read_csv("./DDA_data/DDA_Data_v2/PF_and_DOLP_medium_irregular_cuboids_medium_KCl_532nm.txt",header=[0])
 DDA_MediumKCl_532nm_IrregCuboid_Array = DDA_MediumKCl_532nm_IrregCuboid.to_numpy()
 DDA_MediumKCl_532nm_IrregCuboid_Rad = DDA_MediumKCl_532nm_IrregCuboid_Array[:,0] * np.pi / 180 ## extract first column (degrees), change to radians
 DDA_MediumKCl_532nm_IrregCuboid_cosd = np.cos(DDA_MediumKCl_532nm_IrregCuboid_Rad) # extract first column (degrees), change to cos
@@ -371,7 +371,7 @@ DDA_MediumKCl_532nm_IrregCuboid_Normalized2 = 2 * DDA_MediumKCl_532nm_IrregCuboi
 DDA_MediumKCl_532nm_IrregCuboid_Full_Spline = CubicSpline(DDA_MediumKCl_532nm_IrregCuboid_cosd_flip, DDA_MediumKCl_532nm_IrregCuboid_Normalized2)
 
 #Large 532 nm DDA (Cuboid)
-DDA_LargeKCl_532nm_Cuboid = pd.read_csv("./DDA_data/PF_and_DOLP_large_regular_cuboids_KCl_532nm.txt",header=[0])
+DDA_LargeKCl_532nm_Cuboid = pd.read_csv("./DDA_data/DDA_Data_v2/PF_and_DOLP_large_regular_cuboids_KCl_532nm.txt",header=[0])
 DDA_LargeKCl_532nm_Cuboid_Array = DDA_LargeKCl_532nm_Cuboid.to_numpy()
 DDA_LargeKCl_532nm_Cuboid_Rad = DDA_LargeKCl_532nm_Cuboid_Array[:,0] * np.pi / 180 ## extract first column (degrees), change to radians
 DDA_LargeKCl_532nm_Cuboid_cosd = np.cos(DDA_LargeKCl_532nm_Cuboid_Rad) # extract first column (degrees), change to cos
@@ -383,7 +383,7 @@ DDA_LargeKCl_532nm_Cuboid_Normalized2 = 2 * DDA_LargeKCl_532nm_Cuboid_Intensity_
 DDA_LargeKCl_532nm_Cuboid_Full_Spline = CubicSpline(DDA_LargeKCl_532nm_Cuboid_cosd_flip, DDA_LargeKCl_532nm_Cuboid_Normalized2)
 
 # Large 532 nm DDA (Medium Irregular)
-DDA_LargeKCl_532nm_IrregCuboid = pd.read_csv("./DDA_data/PF_and_DOLP_large_irregular_cuboids_medium_KCl_532nm.txt",header=[0])
+DDA_LargeKCl_532nm_IrregCuboid = pd.read_csv("./DDA_data/DDA_Data_v2/PF_and_DOLP_large_irregular_cuboids_medium_KCl_532nm.txt",header=[0])
 DDA_LargeKCl_532nm_IrregCuboid_Array = DDA_LargeKCl_532nm_IrregCuboid.to_numpy()
 DDA_LargeKCl_532nm_IrregCuboid_Rad = DDA_LargeKCl_532nm_IrregCuboid_Array[:,0] * np.pi / 180 ## extract first column (degrees), change to radians
 DDA_LargeKCl_532nm_IrregCuboid_cosd = np.cos(DDA_LargeKCl_532nm_IrregCuboid_Rad) # extract first column (degrees), change to cos
